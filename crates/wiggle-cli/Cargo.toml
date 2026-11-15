@@ -1,0 +1,12 @@
+[package]
+name = "wiggle-cli"
+version = "0.2.0"
+edition = "2021"
+license = "MIT"
+
+[[bin]]
+name = "wiggle"
+path = "src/main.rs"
+
+[dependencies]
+wiggle-core = { path = "../wiggle-core" }

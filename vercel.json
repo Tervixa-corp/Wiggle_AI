@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "apps/desktop-ui/dist",
+  "installCommand": "npm ci"
+}
