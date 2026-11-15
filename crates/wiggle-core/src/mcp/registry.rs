@@ -58,7 +58,9 @@ impl McpConfigFile {
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)?;
         }
-        std::fs::write(path, serde_json::to_string_pretty(self)?)?;
+        let json = serde_json::to_string_pretty(self)
+            .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
+        std::fs::write(path, json)?;
         Ok(())
     }
 }
