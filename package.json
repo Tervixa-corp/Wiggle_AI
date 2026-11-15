@@ -1,1 +1,16 @@
-{"name":"tervixa-wiggle","private":true,"workspaces":["apps/desktop-ui"],"scripts":{"dev":"npm run dev -w @wiggle/desktop-ui","build":"npm run build -w @wiggle/desktop-ui"}}
+{
+  "name": "tervixa-wiggle",
+  "private": true,
+  "workspaces": [
+    "apps/desktop-ui"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @wiggle/desktop-ui",
+    "build": "npm run build -w @wiggle/desktop-ui",
+    "start": "node server/main.mjs",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4"
+  }
+}

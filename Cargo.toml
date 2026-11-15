@@ -1,3 +1,4 @@
 [workspace]
-members = ["crates/wiggle-core", "crates/wiggle-cli"]
+members = ["crates/wiggle-core", "crates/wiggle-cli", "crates/wiggle-desktop"]
+default-members = ["crates/wiggle-core", "crates/wiggle-cli"]
 resolver = "2"

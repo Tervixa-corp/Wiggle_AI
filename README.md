@@ -1,34 +1,45 @@
 # Tervixa Wiggle
 
-An early foundation for a cross-platform coding assistant from Tervixa Corporation. This repository currently contains a React workbench preview and a small shared Rust identity library and CLI, **not a production agent**.
+An early foundation for a cross-platform coding assistant from Tervixa Corporation. It includes a React workbench and a local, OpenAI-compatible chat gateway. **It is not yet an autonomous coding agent.** A preliminary Tauri desktop shell is included but has not been built or tested here.
 
-## Run the preview
+## Run the local chat
 
-Requires Node.js 20 or newer.
+Requires Node.js 20 or newer. Build the UI, set the provider configuration in your terminal, and start the loopback-only server:
 
 ```sh
 npm ci
-npm run dev
+npm run build
+export WIGGLE_MODEL="your-model-name"
+export WIGGLE_API_KEY="your-provider-key"
+# Optional; defaults to https://api.openai.com/v1
+export WIGGLE_BASE_URL="https://api.openai.com/v1"
+npm start
 ```
 
-The interface supports local, in-memory sessions, a composer, navigation and a persisted dark/light theme. Submitting a message displays a local notice; it does not contact a model. Sessions disappear on reload. No keys or private data are collected.
+On Windows PowerShell use `$env:WIGGLE_MODEL = "your-model-name"` (and similarly for the other variables). Open the local URL printed by the server. For Ollama's OpenAI-compatible API, use `WIGGLE_BASE_URL=http://127.0.0.1:11434/v1`, set `WIGGLE_MODEL` to a locally installed model, and leave the key unset if your provider does not require one. Compatibility and model names depend on the provider.
 
-## Rust foundation
+The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and non-loopback Host headers, and keeps the configured API key out of the browser and status response. It sends the conversation and identity instruction to the configured provider. Only use a provider you trust; chat content leaves your machine when using a remote provider. Sessions are in memory and disappear on reload. Do not expose this development server to the public internet.
 
-With a Rust toolchain installed:
+`npm run dev` starts a UI-only Vite preview; it does not connect to the local chat server. The standalone `preview/wiggle-ui.html` is also an earlier UI-only snapshot.
+
+## Desktop preview installers
+
+The manually triggered **Build preview installers** GitHub Actions workflow attempts to build platform-specific Tauri UI-only installers and CLI binaries and uploads them as workflow artifacts with checksums. This workflow has not yet been verified. The desktop shell does **not** include or connect to the local Node chat gateway; it is a UI preview only. These builds are unsigned, and platform security warnings may appear. No installer binaries are included in the repository.
+
+## Test
 
 ```sh
-cargo test --workspace
-cargo run -p wiggle-cli -- --help
-cargo run -p wiggle-cli -- identity
+npm test
+npm run build
+cargo test --workspace  # requires Rust
 ```
 
 ## Current limitations
 
-No desktop shell, providers, streaming, tools, workspace access, permissions, MCP, memory, skills loading, browser automation, agent orchestration, terminal, release installers or undo/redo are implemented. Settings other than appearance are informational. Do not use the preview for sensitive information or expect autonomous execution. The included skill is an example, not loaded by the application.
+Chat is non-streaming and uses only the OpenAI-compatible chat completions protocol. There is no persistence, integrated desktop backend, tool execution, workspace access, permissions, MCP, memory, skill loading, browser automation, agent orchestration, terminal, release installers or undo/redo. The Rust workspace contains only a minimal identity library and CLI; the chat gateway is currently Node.js. Settings other than appearance are informational. The bundled skill is an example and is not loaded by the application.
 
 ## Reference study
 
-The initial structure was informed by inspection of OpenCode's separation of server, desktop, TUI and session UI packages, Codex's separate Rust app-server, protocol and patch crates, and Anthropic's SKILL.md conventions. This is an independent implementation, not a copy or a compatibility claim.
+See [docs/reference-study.md](docs/reference-study.md) for the sources inspected and the resulting boundaries. This is an independent implementation, not a copy or a compatibility claim.
 
 Licensed under the MIT License.
