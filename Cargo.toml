@@ -1,0 +1,3 @@
+[workspace]
+members = ["crates/wiggle-core", "crates/wiggle-cli"]
+resolver = "2"
