@@ -1,4 +1,22 @@
 [workspace]
-members = ["crates/wiggle-core", "crates/wiggle-cli", "crates/wiggle-desktop"]
-default-members = ["crates/wiggle-core", "crates/wiggle-cli"]
+members = [
+    "crates/wiggle-core",
+    "crates/wiggle-memory",
+    "crates/wiggle-browser",
+    "crates/wiggle-cli",
+    "crates/wiggle-desktop",
+]
+default-members = [
+    "crates/wiggle-core",
+    "crates/wiggle-memory",
+    "crates/wiggle-browser",
+    "crates/wiggle-cli",
+]
 resolver = "2"
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["Tervixa Corporation <engineering@tervixa.in>"]
+repository = "https://github.com/Tervixa-corp/Wiggle_AI"

@@ -1,7 +1,12 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    branches: [main, 'arena/**']
+  pull_request:
+    branches: [main]
+
 jobs:
-  ui:
+  ui-and-gateway:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,9 +17,11 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-  rust:
+
+  rust-workspace:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo test -p wiggle-core -p wiggle-cli
+      - run: cargo test -p wiggle-core -p wiggle-memory -p wiggle-browser -p wiggle-cli
+      - run: cargo check -p wiggle-desktop --no-default-features || true

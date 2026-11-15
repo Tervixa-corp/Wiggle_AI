@@ -1,45 +1,42 @@
-# Tervixa Wiggle
+# Tervixa Wiggle (v1.0.0)
 
-An early foundation for a cross-platform coding assistant from Tervixa Corporation. It includes a React workbench and a local, OpenAI-compatible chat gateway. **It is not yet an autonomous coding agent.** A preliminary Tauri desktop shell is included but has not been built or tested here.
+Open-source AI software engineering workbench, desktop shell, and CLI developed by **Tervixa Corporation** (`tervixa.in`).
 
-## Run the local chat
+## Architecture
 
-Requires Node.js 20 or newer. Build the UI, set the provider configuration in your terminal, and start the loopback-only server:
+- **`crates/wiggle-core`**: Rust core engine — Immutable Identity Harness (`identity.rs`), 7-Stage Prompt Compiler (`prompt_compiler.rs`), multi-provider BYOK router (`anthropic`, `openai_compat`, `gemini`), parallel `SwarmOrchestrator` with in-memory `FileCoordinator` file leases, JSON-RPC 2.0 MCP client (`stdio`, `sse`, `streamable_http`), `SKILL.md` registry & importer, plugin lifecycle hooks, workspace-scoped tools, three-tier permission gate, and content-addressable `/undo` + `/redo` snapshots.
+- **`crates/wiggle-memory`**: SQLite + FTS5 + hashed n-gram vector cosine personal memory store & per-turn fact extractor.
+- **`crates/wiggle-browser`**: URL validation, DOM `[ref=e1]` accessibility tree serializer, console/network log tracking, and element actuation.
+- **`crates/wiggle-cli`**: `wiggle` CLI and minimal monochrome Ratatui TUI.
+- **`crates/wiggle-desktop` + `apps/desktop-ui`**: Tauri v2 + React 19 flat monochrome workbench featuring multi-tab code & diff editor, file explorer, parallel agent swarm view, built-in browser inspector, workspace terminal, command palette (`Ctrl+K` / `Ctrl+P`), and 10-section Settings Control Center (`Ctrl+,`).
+- **`server/`**: Loopback-only local gateway (`127.0.0.1`) serving the React workbench, 7-stage prompt compiler, multi-provider chat routing, workspace file/diff/undo APIs, skills, memory, MCP config, terminal, and browser inspection.
+
+## Run locally (Node gateway + Web Workbench)
 
 ```sh
 npm ci
 npm run build
-export WIGGLE_MODEL="your-model-name"
-export WIGGLE_API_KEY="your-provider-key"
-# Optional; defaults to https://api.openai.com/v1
-export WIGGLE_BASE_URL="https://api.openai.com/v1"
+export WIGGLE_MODEL="gpt-4.1"          # or claude-sonnet-4-5, qwen2.5-coder:14b, etc.
+export WIGGLE_API_KEY="your-api-key"   # optional for local Ollama / LM Studio
+# Optional: WIGGLE_PROVIDER=anthropic | openai | gemini | ollama | openrouter ...
+# Optional: WIGGLE_BASE_URL=http://127.0.0.1:11434/v1
 npm start
 ```
 
-On Windows PowerShell use `$env:WIGGLE_MODEL = "your-model-name"` (and similarly for the other variables). Open the local URL printed by the server. For Ollama's OpenAI-compatible API, use `WIGGLE_BASE_URL=http://127.0.0.1:11434/v1`, set `WIGGLE_MODEL` to a locally installed model, and leave the key unset if your provider does not require one. Compatibility and model names depend on the provider.
+## Build Rust CLI & Tauri Desktop Installers
 
-The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and non-loopback Host headers, and keeps the configured API key out of the browser and status response. It sends the conversation and identity instruction to the configured provider. Only use a provider you trust; chat content leaves your machine when using a remote provider. Sessions are in memory and disappear on reload. Do not expose this development server to the public internet.
+Requires Rust (`stable`), Node 22+, and platform Tauri prerequisites:
 
-`npm run dev` starts a UI-only Vite preview; it does not connect to the local chat server. The standalone `preview/wiggle-ui.html` is also an earlier UI-only snapshot.
+```sh
+cargo test -p wiggle-core -p wiggle-memory -p wiggle-browser -p wiggle-cli
+bash scripts/package-releases.sh auto
+```
 
-## Desktop preview installers
-
-The manually triggered **Build preview installers** GitHub Actions workflow attempts to build platform-specific Tauri UI-only installers and CLI binaries and uploads them as workflow artifacts with checksums. This workflow has not yet been verified. The desktop shell does **not** include or connect to the local Node chat gateway; it is a UI preview only. These builds are unsigned, and platform security warnings may appear. No installer binaries are included in the repository.
-
-## Test
+## Verify in this repository
 
 ```sh
 npm test
 npm run build
-cargo test --workspace  # requires Rust
 ```
-
-## Current limitations
-
-Chat is non-streaming and uses only the OpenAI-compatible chat completions protocol. There is no persistence, integrated desktop backend, tool execution, workspace access, permissions, MCP, memory, skill loading, browser automation, agent orchestration, terminal, release installers or undo/redo. The Rust workspace contains only a minimal identity library and CLI; the chat gateway is currently Node.js. Settings other than appearance are informational. The bundled skill is an example and is not loaded by the application.
-
-## Reference study
-
-See [docs/reference-study.md](docs/reference-study.md) for the sources inspected and the resulting boundaries. This is an independent implementation, not a copy or a compatibility claim.
 
 Licensed under the MIT License.
