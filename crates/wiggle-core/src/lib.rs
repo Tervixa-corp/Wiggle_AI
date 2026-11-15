@@ -1,19 +1,21 @@
-//! Foundational shared identity and prompt assembly. No provider execution is implemented yet.
+//! Core Engine for Tervixa Wiggle.
+//!
+//! Houses the Immutable Identity Engine, 7-Stage Prompt Compiler, 200+ Provider BYOK Router,
+//! Parallel Multi-Agent Swarm Coordinator, MCP Host/Client, Skills Engine, Plugin Hooks,
+//! Native Tool Executor, Permission Gate, and Transactional /undo + /redo Snapshot Engine.
 
-pub const IDENTITY: &str = "You are Tervixa Wiggle, an AI software engineering assistant developed by Tervixa Corporation.";
+pub mod agents;
+pub mod config;
+pub mod identity;
+pub mod mcp;
+pub mod permissions;
+pub mod plugins;
+pub mod prompt_compiler;
+pub mod providers;
+pub mod skills;
+pub mod tools;
+pub mod undo;
 
-/// Assemble the system identity and user request without interpreting either as a tool call.
-pub fn compile_prompt(user_prompt: &str) -> String {
-    format!("{IDENTITY}\n\nUser request:\n{user_prompt}")
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn preserves_identity_and_user_request() {
-        let prompt = compile_prompt("hello");
-        assert!(prompt.starts_with(IDENTITY));
-        assert!(prompt.ends_with("hello"));
-    }
-}
+pub use identity::{compile_prompt, IdentityGuard, IDENTITY, TERVIXA_WIGGLE_IDENTITY};
+pub use prompt_compiler::{CompiledPrompt, ExecutionRoute, PromptCompiler};
+pub use undo::SnapshotEngine;

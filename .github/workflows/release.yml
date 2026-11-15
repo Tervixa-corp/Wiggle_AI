@@ -1,5 +1,8 @@
-name: Build preview installers
+name: Release Installers
 on:
+  push:
+    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -32,31 +35,13 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev librsvg2-dev patchelf rpm
       - run: npm ci
       - run: npm test
-      - name: Build native preview and CLI
+      - run: npm run build
+      - name: Build native desktop installers and wiggle CLI
         shell: bash
-        run: |
-          set -euxo pipefail
-          if [[ '${{ matrix.platform }}' == 'macos' ]]; then
-            (cd crates/wiggle-desktop && npx tauri build --target universal-apple-darwin --bundles dmg,app)
-            cargo build --release -p wiggle-cli --target aarch64-apple-darwin
-            cargo build --release -p wiggle-cli --target x86_64-apple-darwin
-            mkdir -p releases/macos
-            lipo -create target/aarch64-apple-darwin/release/wiggle target/x86_64-apple-darwin/release/wiggle -output releases/macos/wiggle-macos-universal
-          elif [[ '${{ matrix.platform }}' == 'windows' ]]; then
-            (cd crates/wiggle-desktop && npx tauri build --bundles nsis,msi)
-            cargo build --release -p wiggle-cli
-            mkdir -p releases/windows
-            cp target/release/wiggle.exe releases/windows/wiggle-windows-x64.exe
-          else
-            (cd crates/wiggle-desktop && npx tauri build --bundles deb,rpm,appimage)
-            cargo build --release -p wiggle-cli
-            mkdir -p releases/linux
-            cp target/release/wiggle releases/linux/wiggle-linux-x64
-          fi
-          bash scripts/collect-installers.sh '${{ matrix.platform }}'
+        run: bash scripts/package-releases.sh '${{ matrix.platform }}'
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: wiggle-preview-${{ matrix.platform }}
-          path: releases/${{ matrix.platform }}/
+          name: tervixa-wiggle-${{ matrix.platform }}
+          path: releases/
           if-no-files-found: error

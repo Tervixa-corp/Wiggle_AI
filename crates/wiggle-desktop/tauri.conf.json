@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Tervixa Wiggle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "identifier": "com.tervixa.wiggle",
   "build": {
     "beforeBuildCommand": "npm run build",
@@ -13,12 +13,12 @@
         "title": "Tervixa Wiggle",
         "width": 1440,
         "height": 900,
-        "minWidth": 800,
-        "minHeight": 600
+        "minWidth": 900,
+        "minHeight": 640
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data:; connect-src 'self'"
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data:; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-src http://127.0.0.1:* http://localhost:*"
     }
   },
   "bundle": {
@@ -32,6 +32,7 @@
       "icons/icon.ico"
     ],
     "category": "DeveloperTool",
-    "shortDescription": "Tervixa Wiggle workbench preview"
+    "shortDescription": "Tervixa Wiggle — Autonomous AI Software Engineering Workbench",
+    "longDescription": "Native cross-platform AI software engineering workbench and CLI by Tervixa Corporation featuring BYOK multi-provider routing, parallel swarm orchestration, MCP hub, SKILL.md registry, personal memory, and transactional undo/redo."
   }
 }

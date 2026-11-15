@@ -1,5 +1,25 @@
 [package]
 name = "wiggle-core"
-version = "0.1.0"
-edition = "2021"
-license = "MIT"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0"
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+dirs = "5.0"
+futures = "0.3"
+globset = "0.4"
+regex = "1.11"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2.0"
+tokio = { version = "1.42", features = ["full"] }
+toml = "0.8"
+uuid = { version = "1.11", features = ["v4"] }
+walkdir = "2.5"
+wiggle-browser = { path = "../wiggle-browser" }
+wiggle-memory = { path = "../wiggle-memory" }
