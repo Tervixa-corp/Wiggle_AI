@@ -1,0 +1,62 @@
+name: Build preview installers
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: linux
+          - os: windows-latest
+            platform: windows
+          - os: macos-latest
+            platform: macos
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - name: Install Linux dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev librsvg2-dev patchelf rpm
+      - run: npm ci
+      - run: npm test
+      - name: Build native preview and CLI
+        shell: bash
+        run: |
+          set -euxo pipefail
+          if [[ '${{ matrix.platform }}' == 'macos' ]]; then
+            (cd crates/wiggle-desktop && npx tauri build --target universal-apple-darwin --bundles dmg,app)
+            cargo build --release -p wiggle-cli --target aarch64-apple-darwin
+            cargo build --release -p wiggle-cli --target x86_64-apple-darwin
+            mkdir -p releases/macos
+            lipo -create target/aarch64-apple-darwin/release/wiggle target/x86_64-apple-darwin/release/wiggle -output releases/macos/wiggle-macos-universal
+          elif [[ '${{ matrix.platform }}' == 'windows' ]]; then
+            (cd crates/wiggle-desktop && npx tauri build --bundles nsis,msi)
+            cargo build --release -p wiggle-cli
+            mkdir -p releases/windows
+            cp target/release/wiggle.exe releases/windows/wiggle-windows-x64.exe
+          else
+            (cd crates/wiggle-desktop && npx tauri build --bundles deb,rpm,appimage)
+            cargo build --release -p wiggle-cli
+            mkdir -p releases/linux
+            cp target/release/wiggle releases/linux/wiggle-linux-x64
+          fi
+          bash scripts/collect-installers.sh '${{ matrix.platform }}'
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wiggle-preview-${{ matrix.platform }}
+          path: releases/${{ matrix.platform }}/
+          if-no-files-found: error
