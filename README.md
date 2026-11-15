@@ -22,6 +22,17 @@ The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and
 
 `npm run dev` starts a UI-only Vite preview; it does not connect to the local chat server. The standalone `preview/wiggle-ui.html` is also an earlier UI-only snapshot.
 
+## Read-only workspace access (optional)
+
+Set `WIGGLE_WORKSPACE` to a project directory to let the local UI browse and read files in that directory. It is read-only: there are no write, edit, delete or shell endpoints. Requests are limited to paths inside the workspace; absolute paths, `..` segments, and symlinks that resolve outside the root are rejected. Files that commonly contain credentials (`.env*`, private keys, `.npmrc`, `.netrc`, `.git/`) are never returned, and `node_modules`, `target`, `dist` and `.wiggle` are not listed. Binary files and files over 256 KB are refused. The endpoints are `GET /api/workspace/list?path=` and `GET /api/workspace/file?path=`.
+
+```sh
+export WIGGLE_WORKSPACE="/path/to/your/project"
+npm start
+```
+
+This is a foundation for later permission-gated editing; the model is not yet given access to these files.
+
 ## Desktop preview installers
 
 The manually triggered **Build preview installers** GitHub Actions workflow attempts to build platform-specific Tauri UI-only installers and CLI binaries and uploads them as workflow artifacts with checksums. This workflow has not yet been verified. The desktop shell does **not** include or connect to the local Node chat gateway; it is a UI preview only. These builds are unsigned, and platform security warnings may appear. No installer binaries are included in the repository.
@@ -36,7 +47,7 @@ cargo test --workspace  # requires Rust
 
 ## Current limitations
 
-Chat is non-streaming and uses only the OpenAI-compatible chat completions protocol. There is no persistence, integrated desktop backend, tool execution, workspace access, permissions, MCP, memory, skill loading, browser automation, agent orchestration, terminal, release installers or undo/redo. The Rust workspace contains only a minimal identity library and CLI; the chat gateway is currently Node.js. Settings other than appearance are informational. The bundled skill is an example and is not loaded by the application.
+Chat is non-streaming and uses only the OpenAI-compatible chat completions protocol. There is no persistence, integrated desktop backend, model tool execution, file editing, permissions prompts, MCP, memory, skill loading, browser automation, agent orchestration, terminal, release installers or undo/redo. The Rust workspace contains only a minimal identity library and CLI; the chat gateway is currently Node.js. Settings other than appearance are informational. The bundled skill is an example and is not loaded by the application.
 
 ## Reference study
 

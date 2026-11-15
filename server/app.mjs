@@ -13,7 +13,7 @@ export function readConfig(env = process.env) {
   if (url.username || url.password || url.search || url.hash) throw new Error('WIGGLE_BASE_URL must not contain credentials, query parameters or a fragment');
   const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
   if (url.protocol !== 'https:' && !(url.protocol === 'http:' && loopback)) throw new Error('WIGGLE_BASE_URL must use HTTPS, except for loopback HTTP endpoints');
-  return { base: base.replace(/\/+$/, ''), model: env.WIGGLE_MODEL || '', apiKey: env.WIGGLE_API_KEY || '' };
+  return { base: base.replace(/\/+$/, ''), model: env.WIGGLE_MODEL || '', apiKey: env.WIGGLE_API_KEY || '', workspacePath: env.WIGGLE_WORKSPACE || '' };
 }
 
 function reply(res, status, body) {
@@ -36,12 +36,25 @@ function trusted(req) {
   return !origin || origin === `http://${host}`;
 }
 
-export function createApp({ config = readConfig(), fetchImpl = fetch, staticDir = uiDir } = {}) {
+export function createApp({ config = readConfig(), fetchImpl = fetch, staticDir = uiDir, workspace = null } = {}) {
   return http.createServer(async (req, res) => {
     if (!trusted(req)) return reply(res, 403, { error: 'Only same-origin loopback requests are allowed.' });
     const pathname = new URL(req.url || '/', 'http://localhost').pathname;
     if (pathname === '/api/status' && req.method === 'GET') {
-      return reply(res, 200, { configured: Boolean(config.model), model: config.model, provider: new URL(config.base).hostname });
+      return reply(res, 200, { configured: Boolean(config.model), model: config.model, provider: new URL(config.base).hostname, workspace: workspace ? workspace.name : null });
+    }
+    if (pathname.startsWith('/api/workspace/') && req.method === 'GET') {
+      if (!workspace) return reply(res, 404, { error: 'No workspace is configured. Set WIGGLE_WORKSPACE before starting the server.' });
+      const query = new URL(req.url || '/', 'http://localhost').searchParams;
+      const relative = query.get('path') ?? '';
+      try {
+        if (pathname === '/api/workspace/list') return reply(res, 200, await workspace.list(relative));
+        if (pathname === '/api/workspace/file') return reply(res, 200, await workspace.read(relative));
+        return reply(res, 404, { error: 'Not found.' });
+      } catch (error) {
+        if (error?.name === 'WorkspaceError') return reply(res, error.status, { error: error.message });
+        return reply(res, 500, { error: 'Workspace request failed.' });
+      }
     }
     if (pathname === '/api/chat' && req.method === 'POST') {
       try {
