@@ -18,7 +18,7 @@ npm start
 
 On Windows PowerShell use `$env:WIGGLE_MODEL = "your-model-name"` (and similarly for the other variables). Open the local URL printed by the server. For Ollama's OpenAI-compatible API, use `WIGGLE_BASE_URL=http://127.0.0.1:11434/v1`, set `WIGGLE_MODEL` to a locally installed model, and leave the key unset if your provider does not require one. Compatibility and model names depend on the provider.
 
-The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and non-loopback Host headers, and keeps the configured API key out of the browser and status response. It sends the conversation and identity instruction to the configured provider. Only use a provider you trust; chat content leaves your machine when using a remote provider. Sessions are in memory and disappear on reload. Do not expose this development server to the public internet.
+The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and non-loopback Host headers, and keeps the configured API key out of the browser and status response. It sends the conversation and identity instruction to the configured provider. Only use a provider you trust; chat content leaves your machine when using a remote provider. Chat sessions are saved in this browser (see below). Do not expose this development server to the public internet.
 
 `npm run dev` starts a UI-only Vite preview; it does not connect to the local chat server. The standalone `preview/wiggle-ui.html` is also an earlier UI-only snapshot.
 
