@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { createEditManager } from './edits.mjs';
 import { fileURLToPath } from 'node:url';
 
 const uiDir = fileURLToPath(new URL('../apps/desktop-ui/dist/', import.meta.url));
@@ -37,6 +38,7 @@ function trusted(req) {
 }
 
 export function createApp({ config = readConfig(), fetchImpl = fetch, staticDir = uiDir, workspace = null } = {}) {
+  const edits = workspace ? createEditManager(workspace) : null;
   return http.createServer(async (req, res) => {
     if (!trusted(req)) return reply(res, 403, { error: 'Only same-origin loopback requests are allowed.' });
     const pathname = new URL(req.url || '/', 'http://localhost').pathname;
@@ -70,6 +72,31 @@ export function createApp({ config = readConfig(), fetchImpl = fetch, staticDir 
         if (typeof text !== 'string' || !text.trim()) return reply(res, 502, { error: 'Provider returned an empty or unsupported response.' });
         return reply(res, 200, { text });
       } catch (error) { return reply(res, 400, { error: error instanceof SyntaxError ? 'Invalid JSON.' : error?.message === 'Request too large' ? 'Request too large.' : 'Could not reach the provider. Check the local server configuration.' }); }
+    }
+    if (pathname === '/api/edits' || pathname.startsWith('/api/edits/')) {
+      if (!edits) return reply(res, 404, { error: 'No workspace is configured. Set WIGGLE_WORKSPACE before starting the server.' });
+      try {
+        const action = pathname.slice('/api/edits'.length).replace(/^\/+/, '');
+        if (req.method === 'GET' && action === '') return reply(res, 200, await edits.list());
+        if (req.method === 'POST' && action === '') {
+          const body = await bodyJson(req);
+          return reply(res, 201, await edits.propose(body?.path, body?.content));
+        }
+        if (req.method === 'POST' && action === 'undo') return reply(res, 200, await edits.undo());
+        if (req.method === 'POST' && action === 'redo') return reply(res, 200, await edits.redo());
+        const match = /^([0-9a-f-]{36})\/(approve|reject)$/.exec(action);
+        if (match && req.method === 'POST') {
+          if (match[2] === 'reject') return reply(res, 200, await edits.reject(match[1]));
+          const body = await bodyJson(req);
+          return reply(res, 200, await edits.approve(match[1], body?.hunks));
+        }
+        return reply(res, 404, { error: 'Not found.' });
+      } catch (error) {
+        if (error instanceof SyntaxError) return reply(res, 400, { error: 'Invalid JSON.' });
+        if (error?.message === 'Request too large') return reply(res, 413, { error: 'Request too large.' });
+        if (error?.name === 'WorkspaceError') return reply(res, error.status, { error: error.message });
+        return reply(res, 500, { error: 'Edit request failed.' });
+      }
     }
     if (pathname.startsWith('/api/')) return reply(res, 404, { error: 'Not found.' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return reply(res, 405, { error: 'Method not allowed.' });

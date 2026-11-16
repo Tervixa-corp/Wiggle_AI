@@ -80,6 +80,16 @@ export async function createWorkspace(rootDir) {
       return { path: rel, entries, truncated: dirents.length > MAX_DIR_ENTRIES };
     },
 
+    // Resolve an existing regular file that may be edited. Excluded and vendored folders are never writable.
+    async resolveFileForWrite(relative) {
+      const rel = validateRelativePath(relative);
+      if (rel === '.') throw new WorkspaceError('Choose a file, not the workspace root.');
+      if (rel.split('/').some(part => SKIPPED_DIRS.has(part))) throw new WorkspaceError('This location is excluded from edits.', 403);
+      const { real } = await resolveInside(rel);
+      if (!(await stat(real)).isFile()) throw new WorkspaceError('Not a regular file.');
+      return { rel, real };
+    },
+
     async read(relative, { maxBytes = MAX_FILE_BYTES } = {}) {
       const { rel, real } = await resolveInside(relative);
       const info = await stat(real);

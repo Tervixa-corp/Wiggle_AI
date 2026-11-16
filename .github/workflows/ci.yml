@@ -17,4 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check -p wiggle-core -p wiggle-cli
+      - run: cargo clippy -p wiggle-core -p wiggle-cli --all-targets -- -D warnings
       - run: cargo test -p wiggle-core -p wiggle-cli

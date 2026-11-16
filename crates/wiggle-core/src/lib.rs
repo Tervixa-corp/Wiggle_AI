@@ -1,8 +1,14 @@
-//! Foundational shared identity and prompt assembly. No provider execution is implemented yet.
+//! Tervixa Wiggle core engine: identity, prompt compilation, skills, and workspace permissions.
+//! Provider routing, MCP, memory, hooks and agent orchestration are not implemented yet.
 
-pub const IDENTITY: &str = "You are Tervixa Wiggle, an AI software engineering assistant developed by Tervixa Corporation.";
+pub mod identity;
+pub mod permissions;
+pub mod prompt_compiler;
+pub mod skills;
 
-/// Assemble the system identity and user request without interpreting either as a tool call.
+pub use identity::IDENTITY;
+
+/// Assemble the system identity and user request. Kept for compatibility with earlier callers.
 pub fn compile_prompt(user_prompt: &str) -> String {
     format!("{IDENTITY}\n\nUser request:\n{user_prompt}")
 }

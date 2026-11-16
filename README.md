@@ -24,14 +24,38 @@ The gateway binds only to `127.0.0.1`, rejects cross-origin browser requests and
 
 ## Read-only workspace access (optional)
 
-Set `WIGGLE_WORKSPACE` to a project directory to let the local UI browse and read files in that directory. It is read-only: there are no write, edit, delete or shell endpoints. Requests are limited to paths inside the workspace; absolute paths, `..` segments, and symlinks that resolve outside the root are rejected. Files that commonly contain credentials (`.env*`, private keys, `.npmrc`, `.netrc`, `.git/`) are never returned, and `node_modules`, `target`, `dist` and `.wiggle` are not listed. Binary files and files over 256 KB are refused. The endpoints are `GET /api/workspace/list?path=` and `GET /api/workspace/file?path=`.
+Set `WIGGLE_WORKSPACE` to a project directory to let the local UI browse and read files in that directory. The browsing endpoints are read-only; edits are described below. There are no delete or shell endpoints. Requests are limited to paths inside the workspace; absolute paths, `..` segments, and symlinks that resolve outside the root are rejected. Files that commonly contain credentials (`.env*`, private keys, `.npmrc`, `.netrc`, `.git/`) are never returned, and `node_modules`, `target`, `dist` and `.wiggle` are not listed. Binary files and files over 256 KB are refused. The endpoints are `GET /api/workspace/list?path=` and `GET /api/workspace/file?path=`.
 
 ```sh
 export WIGGLE_WORKSPACE="/path/to/your/project"
 npm start
 ```
 
-This is a foundation for later permission-gated editing; the model is not yet given access to these files.
+The model is not yet given access to these files.
+
+## Approval-gated edits, diff review, undo and redo
+
+With `WIGGLE_WORKSPACE` set, open a file in the workbench and choose **Edit**. **Review changes** creates a proposal and shows a line diff with one toggle per change. Nothing is written until you choose **Apply**, which writes only the accepted changes. **Reject all** leaves the file unchanged.
+
+- Writes are atomic (temporary file, then rename). Before writing, the server checks that the file still matches the version you proposed, so external changes are never overwritten. Undo and redo check the same way.
+- **Undo** and **Redo** (buttons, or Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z outside text fields) step through applied edits.
+- Edits are limited to UTF-8 text files up to 128 KB. Excluded paths (secrets, `.git`, `node_modules`, `target`, `dist`, `.wiggle`), symlinks that leave the workspace, and binary files are refused.
+- Undo history and pending proposals are held in memory and are lost when the server restarts. They are not yet written to `.wiggle/snapshots/`.
+- Only you can propose edits. The model does not yet call edit tools.
+
+Endpoints (all same-origin, loopback only): `GET /api/edits`, `POST /api/edits` (`{path, content}`), `POST /api/edits/:id/approve` (`{hunks}`), `POST /api/edits/:id/reject`, `POST /api/edits/undo`, `POST /api/edits/redo`.
+
+## Rust core and CLI
+
+`crates/wiggle-core` (no external dependencies) provides the identity header, a prompt compiler, a `SKILL.md` loader with keyword matching, project instruction loading (`WIGGLE.md`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`), a workspace path validator, and an Allow / Ask / Deny tool policy. The compiler implements the identity, environment, project-instruction and skill stages. Memory, MCP tools, lifecycle hooks and agent routing are not implemented, and the compiler does not include them.
+
+```sh
+cargo run -p wiggle-cli -- identity
+cargo run -p wiggle-cli -- skills --dir bundled-skills
+cargo run -p wiggle-cli -- prompt "review my security change" --dir .
+```
+
+Rust tests: `cargo test -p wiggle-core -p wiggle-cli`. CI also runs `cargo fmt --check` and clippy with warnings denied for these crates.
 
 ## Desktop preview installers
 
@@ -47,7 +71,7 @@ cargo test --workspace  # requires Rust
 
 ## Current limitations
 
-Chat is non-streaming and uses only the OpenAI-compatible chat completions protocol. There is no persistence, integrated desktop backend, model tool execution, file editing, permissions prompts, MCP, memory, skill loading, browser automation, agent orchestration, terminal, release installers or undo/redo. The Rust workspace contains only a minimal identity library and CLI; the chat gateway is currently Node.js. Settings other than appearance are informational. The bundled skill is an example and is not loaded by the application.
+Not implemented yet: a model tool loop and agent execution, parallel agents, MCP, memory, provider routing beyond one OpenAI-compatible endpoint, the built-in browser, the integrated terminal, Monaco, the full settings panel, plugin hooks, persistent undo history, and signed installers. The desktop shell does not yet connect to the Node gateway or the Rust core. The `wiggle-desktop`, `wiggle-memory` and `wiggle-browser` crates are not part of this build. The Rust workspace also includes `wiggle-desktop`, which needs crates.io access to resolve its Tauri dependencies.
 
 ## Reference study
 
