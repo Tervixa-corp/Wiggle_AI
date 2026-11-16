@@ -59,3 +59,23 @@ button:disabled{cursor:default;opacity:.45}
 .hunk-list{display:flex;flex-wrap:wrap;gap:14px;padding:8px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--secondary)}
 .hunk-toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
 .hunk-toggle input{accent-color:var(--text)}
+
+/* Agent panels: tool steps and pending edits. Flat, bordered, no shadows. */
+.agent-steps{margin-top:8px}
+.agent-steps-toggle{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--secondary);padding:2px 0}
+.agent-step-list{margin:6px 0 0;padding:0;list-style:none;border-left:1px solid var(--border)}
+.agent-step-list .step{display:flex;gap:8px;flex-wrap:wrap;padding:4px 10px;font-size:12px;color:var(--secondary)}
+.agent-step-list .step strong{color:var(--text);font-weight:600}
+.agent-step-list .step.error{color:var(--text)}
+.agent-step-list .step em{font-style:normal;border:1px solid var(--border);border-radius:4px;padding:0 5px}
+.pending-proposals{margin:0 auto 8px;max-width:760px;border:1px solid var(--border);border-radius:6px;background:var(--panel);padding:10px 12px}
+.pending-head{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--secondary);margin-bottom:6px}
+.pending-item{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--border)}
+.pending-meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.pending-meta span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pending-meta small{color:var(--muted);font-size:11px}
+.pending-item .outline-button{width:auto;height:26px;margin-top:0;padding:0 8px;gap:6px;justify-content:center;border-radius:4px}
+.pending-item .outline-button.primary{border-color:var(--text)}
+.pending-item .outline-button:disabled,.pending-item .icon-button:disabled{opacity:.5;cursor:default}
+.mode-select{background:transparent;color:inherit;border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-size:12px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
