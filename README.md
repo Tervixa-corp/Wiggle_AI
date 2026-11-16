@@ -41,7 +41,7 @@ With `WIGGLE_WORKSPACE` set, open a file in the workbench and choose **Edit**. *
 - **Undo** and **Redo** (buttons, or Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z outside text fields) step through applied edits.
 - Edits are limited to UTF-8 text files up to 128 KB. Excluded paths (secrets, `.git`, `node_modules`, `target`, `dist`, `.wiggle`), symlinks that leave the workspace, and binary files are refused.
 - Undo history and pending proposals are held in memory and are lost when the server restarts. They are not yet written to `.wiggle/snapshots/`.
-- Only you can propose edits. The model does not yet call edit tools.
+- Only you can apply edits. The agent can propose edits (`propose_edit`), but nothing is written until you approve it, unless you select the `auto-edit` mode, which applies each edit immediately and keeps it undoable.
 
 Endpoints (all same-origin, loopback only): `GET /api/edits`, `POST /api/edits` (`{path, content}`), `POST /api/edits/:id/approve` (`{hunks}`), `POST /api/edits/:id/reject`, `POST /api/edits/undo`, `POST /api/edits/redo`.
 
@@ -71,7 +71,9 @@ cargo test --workspace  # requires Rust
 
 ## Current limitations
 
-Not implemented yet: a model tool loop and agent execution, parallel agents, MCP, memory, provider routing beyond one OpenAI-compatible endpoint, the built-in browser, the integrated terminal, Monaco, the full settings panel, plugin hooks, persistent undo history, and signed installers. The desktop shell does not yet connect to the Node gateway or the Rust core. The `wiggle-desktop`, `wiggle-memory` and `wiggle-browser` crates are not part of this build. The Rust workspace also includes `wiggle-desktop`, which needs crates.io access to resolve its Tauri dependencies.
+Agent tools (Phase A): `POST /api/agent` runs a tool loop with `list_dir`, `read_file`, `search_text` (read-only, inside the workspace, secrets excluded) and `propose_edit`. The loop is capped at 8 steps. Shell, network and other tools are not enabled. The agent UI (tool steps, pending proposals, mode switch) is not built yet (Phase B).
+
+Not implemented yet: the agent UI, parallel agents, MCP, memory, provider routing beyond one OpenAI-compatible endpoint, the built-in browser, the integrated terminal, Monaco, the full settings panel, plugin hooks, persistent undo history, and signed installers. The desktop shell does not yet connect to the Node gateway or the Rust core. The `wiggle-desktop`, `wiggle-memory` and `wiggle-browser` crates are not part of this build. The Rust workspace also includes `wiggle-desktop`, which needs crates.io access to resolve its Tauri dependencies.
 
 ## Reference study
 

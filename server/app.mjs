@@ -2,10 +2,12 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createEditManager } from './edits.mjs';
+import { runAgent, validateMessages, MODES } from './agent.mjs';
+import { CHAT_IDENTITY } from './identity.mjs';
 import { fileURLToPath } from 'node:url';
 
 const uiDir = fileURLToPath(new URL('../apps/desktop-ui/dist/', import.meta.url));
-const identity = 'You are Tervixa Wiggle, an AI software engineering assistant developed by Tervixa Corporation. Be honest about your capabilities. You have no access to tools or the user’s files unless they are included in the conversation.';
+const identity = CHAT_IDENTITY;
 const MAX_BODY = 256 * 1024;
 
 export function readConfig(env = process.env) {
@@ -72,6 +74,24 @@ export function createApp({ config = readConfig(), fetchImpl = fetch, staticDir 
         if (typeof text !== 'string' || !text.trim()) return reply(res, 502, { error: 'Provider returned an empty or unsupported response.' });
         return reply(res, 200, { text });
       } catch (error) { return reply(res, 400, { error: error instanceof SyntaxError ? 'Invalid JSON.' : error?.message === 'Request too large' ? 'Request too large.' : 'Could not reach the provider. Check the local server configuration.' }); }
+    }
+    if (pathname === '/api/agent' && req.method === 'POST') {
+      try {
+        if (!config.model) return reply(res, 503, { error: 'Set WIGGLE_MODEL before starting the local server.' });
+        const input = await bodyJson(req);
+        const messages = validateMessages(input?.messages);
+        if (!messages) return reply(res, 400, { error: 'Invalid conversation.' });
+        const mode = input?.mode ?? 'suggest';
+        if (!MODES.includes(mode)) return reply(res, 400, { error: 'Unknown permission mode.' });
+        const result = await runAgent({ messages, config, fetchImpl, workspace, edits, mode, signal: AbortSignal.timeout(180000) });
+        return reply(res, 200, { ...result, mode, workspace: workspace ? workspace.name : null });
+      } catch (error) {
+        if (error instanceof SyntaxError) return reply(res, 400, { error: 'Invalid JSON.' });
+        if (error?.message === 'Request too large') return reply(res, 413, { error: 'Request too large.' });
+        if (error?.name === 'WorkspaceError') return reply(res, error.status, { error: error.message });
+        if (error?.upstream) return reply(res, 502, { error: error.message });
+        return reply(res, 502, { error: 'Could not reach the provider. Check the local server configuration.' });
+      }
     }
     if (pathname === '/api/edits' || pathname.startsWith('/api/edits/')) {
       if (!edits) return reply(res, 404, { error: 'No workspace is configured. Set WIGGLE_WORKSPACE before starting the server.' });

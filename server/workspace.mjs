@@ -90,6 +90,31 @@ export async function createWorkspace(rootDir) {
       return { rel, real };
     },
 
+    // Case-insensitive plain-text search (no regular expressions, so no catastrophic backtracking).
+    async search(query, { maxMatches = 50, maxFiles = 2000 } = {}) {
+      if (typeof query !== 'string' || query.trim().length === 0 || query.length > 200) throw new WorkspaceError('Search text must be 1-200 characters.');
+      const needle = query.toLowerCase();
+      const matches = [];
+      let filesSeen = 0;
+      const queue = ['.'];
+      while (queue.length && matches.length < maxMatches && filesSeen < maxFiles) {
+        const dir = queue.shift();
+        const { entries } = await this.list(dir);
+        for (const entry of entries) {
+          if (entry.type === 'dir') { queue.push(entry.path); continue; }
+          if (entry.type !== 'file') continue;
+          if (++filesSeen > maxFiles) break;
+          let file;
+          try { file = await this.read(entry.path); } catch { continue; }
+          const lines = file.content.split('\n');
+          for (let i = 0; i < lines.length && matches.length < maxMatches; i++) {
+            if (lines[i].toLowerCase().includes(needle)) matches.push({ path: entry.path, line: i + 1, text: lines[i].slice(0, 300) });
+          }
+        }
+      }
+      return { query, matches, truncated: matches.length >= maxMatches };
+    },
+
     async read(relative, { maxBytes = MAX_FILE_BYTES } = {}) {
       const { rel, real } = await resolveInside(relative);
       const info = await stat(real);
