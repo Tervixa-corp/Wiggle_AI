@@ -79,3 +79,17 @@ button:disabled{cursor:default;opacity:.45}
 .pending-item .outline-button:disabled,.pending-item .icon-button:disabled{opacity:.5;cursor:default}
 .mode-select{background:transparent;color:inherit;border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-size:12px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Phase C: settings controls and saved-session rows. Flat, 4px radius, no shadows. */
+.setting-row .outline-button{width:auto;height:30px;margin-top:0;padding:0 10px;justify-content:center;border-radius:4px}
+.setting-row .outline-button.danger{border-color:var(--text)}
+.setting-row select{border-radius:4px}
+.setting-row .muted-value{color:var(--secondary);font-size:12px}
+.setting-row kbd{border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:11px;color:var(--secondary)}
+.confirm-actions{display:flex;gap:8px}
+.identity-text{white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.6;color:var(--secondary);border:1px solid var(--border);border-radius:4px;padding:12px;margin:0 0 20px}
+.session-row{display:flex;align-items:center;gap:2px}
+.session-row .session{flex:1;min-width:0}
+.session-del{opacity:.5;padding:4px;border-radius:4px}
+.session-del:hover:not(:disabled){opacity:1;background:var(--hover)}
+.session-del:disabled{opacity:.2;cursor:default}

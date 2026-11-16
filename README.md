@@ -73,7 +73,11 @@ cargo test --workspace  # requires Rust
 
 Agent tools (Phase A): `POST /api/agent` runs a tool loop with `list_dir`, `read_file`, `search_text` (read-only, inside the workspace, secrets excluded) and `propose_edit`. The loop is capped at 8 steps. Shell, network and other tools are not enabled. The chat UI shows each tool step under the reply, lists pending edits above the composer with Approve, Reject and Review, and has a permission mode switch: **Suggest edits** (default, nothing is written until you approve) or **Auto-apply edits** (written immediately, undoable from the file view). The mode is remembered in the browser.
 
-Not implemented yet: parallel agents, MCP, memory, provider routing beyond one OpenAI-compatible endpoint, the built-in browser, the integrated terminal, Monaco, the full settings panel, plugin hooks, persistent undo history, and signed installers. The desktop shell does not yet connect to the Node gateway or the Rust core. The `wiggle-desktop`, `wiggle-memory` and `wiggle-browser` crates are not part of this build. The Rust workspace also includes `wiggle-desktop`, which needs crates.io access to resolve its Tauri dependencies.
+Settings (Phase C): Appearance (theme and the list of shortcuts), Permissions (default mode, plus fixed facts about the sandbox), Models (read-only provider and model from the server), Identity (read-only text), and Personal memory (clear saved sessions, with a confirmation step). The other sections say plainly that they are not implemented.
+
+Chat sessions are saved in this browser's localStorage under `wiggle-sessions-v1`. They persist across reloads. Each session can be deleted from the sidebar. Saved data is not encrypted and is not synced to the server.
+
+Not implemented yet: parallel agents, MCP, memory, provider routing beyond one OpenAI-compatible endpoint, the built-in browser, the integrated terminal, Monaco, the settings for agents, MCP, skills, memory, the browser and Git (the settings screen shows each one as not implemented), plugin hooks, persistent undo history, and signed installers. The desktop shell does not yet connect to the Node gateway or the Rust core. The `wiggle-desktop`, `wiggle-memory` and `wiggle-browser` crates are not part of this build. The Rust workspace also includes `wiggle-desktop`, which needs crates.io access to resolve its Tauri dependencies.
 
 ## Reference study
 
