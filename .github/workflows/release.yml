@@ -60,3 +60,33 @@ jobs:
           name: wiggle-preview-${{ matrix.platform }}
           path: releases/${{ matrix.platform }}/
           if-no-files-found: error
+
+  publish:
+    needs: bundle
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloads
+          pattern: wiggle-preview-*
+      - name: Attach installers to a GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: preview-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p upload
+          # Prefix each file with its platform so the three SHA256SUMS files do not collide.
+          while IFS= read -r f; do
+            platform=$(basename "$(dirname "$f")")
+            platform=${platform#wiggle-preview-}
+            cp "$f" "upload/${platform}-$(basename "$f")"
+          done < <(find downloads -type f)
+          (cd upload && sha256sum * > SHA256SUMS-all.txt)
+          gh release create "$TAG" --target "$GITHUB_SHA" --prerelease \
+            --title "Wiggle preview $TAG (unsigned)" \
+            --notes "Unsigned UI preview installers and the wiggle CLI. The desktop app does not include the chat gateway; see the README for running the full app. Verify files with SHA256SUMS-all.txt." \
+            upload/*
