@@ -1,12 +1,18 @@
 name: Build preview installers
 on:
   workflow_dispatch:
+    inputs:
+      windows_artifact_run:
+        description: "Publish Windows only from a completed Windows build in this branch (Actions run ID). Leave blank to rebuild all platforms."
+        type: string
+        required: false
 
 permissions:
   contents: read
 
 jobs:
   bundle:
+    if: ${{ !inputs.windows_artifact_run }}
     strategy:
       fail-fast: false
       matrix:
@@ -91,4 +97,49 @@ jobs:
           gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --latest=false \
             --title "Tervixa Wiggle 0.1.1 desktop preview (unsigned, $TAG)" \
             --notes "Unsigned desktop preview installers and standalone CLI. The desktop app includes the workbench and catalogs but not the local gateway: run the gateway separately in a browser for live chat and MCP testing. Check downloads against SHA256SUMS.txt." \
+            upload/*
+
+  publish-windows-existing:
+    if: ${{ inputs.windows_artifact_run != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN: ${{ inputs.windows_artifact_run }}
+    steps:
+      - name: Verify the source run and Windows build
+        id: source
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN" =~ ^[0-9]+$ ]]
+          run="repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN"
+          metadata=$(gh api "$run")
+          jq -e --arg branch "$GITHUB_REF_NAME" --arg repo "$GITHUB_REPOSITORY" \
+            '.head_branch == $branch and .head_repository.full_name == $repo and .path == ".github/workflows/release.yml" and .event == "workflow_dispatch"' \
+            <<< "$metadata"
+          gh api "$run/jobs" --jq '.jobs[] | select(.name == "bundle (windows-latest, windows)") | .conclusion' | grep -Fx success
+          echo "sha=$(jq -er .head_sha <<< "$metadata")" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: wiggle-preview-windows
+          path: windows
+          run-id: ${{ inputs.windows_artifact_run }}
+          github-token: ${{ github.token }}
+      - name: Publish Windows installer and checksum
+        env:
+          BUILD_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          set -euo pipefail
+          (cd windows && sha256sum -c SHA256SUMS.txt)
+          shopt -s nullglob
+          setup=(windows/*_x64-setup.exe)
+          [[ ${#setup[@]} -eq 1 ]]
+          mkdir -p upload
+          cp "${setup[0]}" upload/Tervixa-Wiggle-Windows-x64-Setup.exe
+          (cd upload && sha256sum Tervixa-Wiggle-Windows-x64-Setup.exe > SHA256SUMS.txt)
+          gh release create "preview-${SOURCE_RUN}-windows" --repo "$GITHUB_REPOSITORY" --target "$BUILD_SHA" \
+            --prerelease --latest=false --title "Tervixa Wiggle 0.1.1 Windows x64 desktop preview (unsigned)" \
+            --notes "Unsigned Windows x64 installer for the workbench and catalogs. The installer does not include the local gateway; use the gateway in a separate browser for live chat and MCP testing. Check the download against SHA256SUMS.txt." \
             upload/*
