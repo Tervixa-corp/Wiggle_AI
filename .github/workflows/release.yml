@@ -131,15 +131,24 @@ jobs:
         env:
           BUILD_SHA: ${{ steps.source.outputs.sha }}
         run: |
-          set -euo pipefail
-          (cd windows && sha256sum -c SHA256SUMS.txt)
-          shopt -s nullglob
-          setup=(windows/*_x64-setup.exe)
-          [[ ${#setup[@]} -eq 1 ]]
+          set -Eeuo pipefail
+          trap 'echo "::error::Windows publish failed on line $LINENO: $BASH_COMMAND"' ERR
+          mapfile -t setup < <(find windows -type f -iname '*-setup.exe')
+          if [[ ${#setup[@]} -ne 1 ]]; then
+            echo "::error::Expected one setup EXE. Found: $(find windows -type f -printf '%P ' )"
+            exit 1
+          fi
+          manifest="$(dirname "${setup[0]}")/SHA256SUMS.txt"
+          expected=$(awk -v name="$(basename "${setup[0]}")" 'substr($0,67)==name {print $1}' "$manifest")
+          actual=$(sha256sum "${setup[0]}" | cut -d ' ' -f 1)
+          if [[ "$expected" != "$actual" ]]; then
+            echo "::error::Setup EXE did not match the checksum manifest"
+            exit 1
+          fi
           mkdir -p upload
           cp "${setup[0]}" upload/Tervixa-Wiggle-Windows-x64-Setup.exe
           (cd upload && sha256sum Tervixa-Wiggle-Windows-x64-Setup.exe > SHA256SUMS.txt)
           gh release create "preview-${SOURCE_RUN}-windows" --repo "$GITHUB_REPOSITORY" --target "$BUILD_SHA" \
             --prerelease --latest=false --title "Tervixa Wiggle 0.1.1 Windows x64 desktop preview (unsigned)" \
             --notes "Unsigned Windows x64 installer for the workbench and catalogs. The installer does not include the local gateway; use the gateway in a separate browser for live chat and MCP testing. Check the download against SHA256SUMS.txt." \
-            upload/*
+            upload/* 2>release-error.txt || { echo "::error::$(head -1 release-error.txt)"; exit 1; }
