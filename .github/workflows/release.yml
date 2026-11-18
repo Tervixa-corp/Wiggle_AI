@@ -148,7 +148,11 @@ jobs:
           mkdir -p upload
           cp "${setup[0]}" upload/Tervixa-Wiggle-Windows-x64-Setup.exe
           (cd upload && sha256sum Tervixa-Wiggle-Windows-x64-Setup.exe > SHA256SUMS.txt)
-          gh release create "preview-${SOURCE_RUN}-windows" --repo "$GITHUB_REPOSITORY" --target "$BUILD_SHA" \
-            --prerelease --latest=false --title "Tervixa Wiggle 0.1.1 Windows x64 desktop preview (unsigned)" \
-            --notes "Unsigned Windows x64 installer for the workbench and catalogs. The installer does not include the local gateway; use the gateway in a separate browser for live chat and MCP testing. Check the download against SHA256SUMS.txt." \
-            upload/* 2>release-error.txt || { echo "::error::$(head -1 release-error.txt)"; exit 1; }
+          tag="preview-${SOURCE_RUN}-windows"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft,targetCommitish \
+            | jq -e --arg sha "$BUILD_SHA" '.isDraft and .targetCommitish == $sha'; then
+            gh release upload "$tag" --repo "$GITHUB_REPOSITORY" upload/* 2>release-error.txt || { echo "::error::$(head -1 release-error.txt)"; exit 1; }
+          else
+            echo "::error::Create a draft release for $tag targeting $BUILD_SHA before dispatching this job."
+            exit 1
+          fi
