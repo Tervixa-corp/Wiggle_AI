@@ -60,3 +60,35 @@ jobs:
           name: wiggle-preview-${{ matrix.platform }}
           path: releases/${{ matrix.platform }}/
           if-no-files-found: error
+
+  publish:
+    needs: bundle
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloads
+          pattern: wiggle-preview-*
+      - name: Publish unsigned preview installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: preview-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p upload
+          shopt -s nullglob
+          windows_setup=(downloads/wiggle-preview-windows/*_x64-setup.exe)
+          [[ ${#windows_setup[@]} -eq 1 ]]
+          cp "${windows_setup[0]}" upload/Tervixa-Wiggle-Windows-x64-Setup.exe
+          for f in downloads/wiggle-preview-*/*; do
+            [[ -f "$f" && "$f" != "${windows_setup[0]}" && "$f" != */SHA256SUMS.txt ]] || continue
+            platform=$(basename "$(dirname "$f")")
+            cp "$f" "upload/${platform#wiggle-preview-}-$(basename "$f")"
+          done
+          (cd upload && sha256sum * > SHA256SUMS.txt)
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --latest=false \
+            --title "Tervixa Wiggle 0.1.1 desktop preview (unsigned, $TAG)" \
+            --notes "Unsigned desktop preview installers and standalone CLI. The desktop app includes the workbench and catalogs but not the local gateway: run the gateway separately in a browser for live chat and MCP testing. Check downloads against SHA256SUMS.txt." \
+            upload/*

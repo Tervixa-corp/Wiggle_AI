@@ -3,3 +3,6 @@ dist/
 target/
 .wiggle/
 releases/
+
+# Local reference research
+.cache/

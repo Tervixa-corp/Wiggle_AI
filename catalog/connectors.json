@@ -1,0 +1,11 @@
+[
+  {"id":"github","name":"GitHub","description":"Repositories, issues and pull requests.","url":"https://api.githubcopilot.com/mcp/","docs":"https://github.com/github/github-mcp-server","tokenEnv":"WIGGLE_MCP_GITHUB_TOKEN"},
+  {"id":"notion","name":"Notion","description":"Workspace pages and databases. Obtain an access token through Notion’s OAuth setup.","url":"https://mcp.notion.com/mcp","docs":"https://developers.notion.com/guides/mcp/build-mcp-client","tokenEnv":"WIGGLE_MCP_NOTION_TOKEN"},
+  {"id":"linear","name":"Linear","description":"Issues, projects and team context, using Linear's read-only endpoint.","url":"https://mcp.linear.app/mcp/readonly","docs":"https://linear.app/docs/mcp","tokenEnv":"WIGGLE_MCP_LINEAR_TOKEN"},
+  {"id":"figma","name":"Figma","description":"Design context and components. An OAuth access token is required.","url":"https://mcp.figma.com/mcp","docs":"https://developers.figma.com/docs/figma-mcp-server/","tokenEnv":"WIGGLE_MCP_FIGMA_TOKEN"},
+  {"id":"vercel","name":"Vercel","description":"Deployment and project context. Follow Vercel's authorization instructions.","url":"https://mcp.vercel.com","docs":"https://vercel.com/docs/mcp/vercel-mcp","tokenEnv":"WIGGLE_MCP_VERCEL_TOKEN"},
+  {"id":"google-drive","name":"Google Drive","description":"Discover connected file providers through the ChatGPT directory. No native Wiggle adapter is shipped for Drive.","docs":"https://chatgpt.com/apps"},
+  {"id":"slack","name":"Slack","description":"Messaging and team knowledge. Review Slack's MCP client requirements.","docs":"https://docs.slack.dev/ai/slack-mcp-server/"},
+  {"id":"atlassian","name":"Atlassian Rovo","description":"Jira and Confluence. Review site access and client authorization requirements.","docs":"https://support.atlassian.com/atlassian-rovo-mcp-server/"},
+  {"id":"stripe","name":"Stripe","description":"Payments and product data. Review Stripe's connector documentation.","docs":"https://docs.stripe.com/mcp"}
+]
