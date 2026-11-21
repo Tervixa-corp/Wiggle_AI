@@ -1,54 +1,61 @@
 import React from 'react';
-import { Bot, FolderTree, Globe, MessageSquare, Puzzle, Settings } from 'lucide-react';
+import { Bot, FolderTree, MessageSquare, Puzzle, Settings } from 'lucide-react';
 
 interface Props {
-  activeView: string;
+  activeView: 'chat' | 'agents' | 'files';
+  agentsEnabled: boolean;
   onSelectChat: () => void;
   onSelectAgents: () => void;
   onToggleSidebar: () => void;
-  onSelectBrowser: () => void;
-  onOpenMcpSettings: () => void;
+  onOpenExtensions: () => void;
   onOpenSettings: () => void;
 }
 
 export const ActivityRail: React.FC<Props> = ({
   activeView,
+  agentsEnabled,
   onSelectChat,
   onSelectAgents,
   onToggleSidebar,
-  onSelectBrowser,
-  onOpenMcpSettings,
+  onOpenExtensions,
   onOpenSettings,
-}) => {
-  return (
-    <nav className="activity-rail" aria-label="Activity Rail">
+}) => (
+  <nav className="wg-rail" aria-label="Activity rail">
+    <button
+      className={`wg-rail-btn ${activeView === 'chat' ? 'is-active' : ''}`}
+      title="Chat"
+      aria-label="Chat"
+      aria-current={activeView === 'chat'}
+      onClick={onSelectChat}
+    >
+      <MessageSquare size={16} />
+    </button>
+    {agentsEnabled && (
       <button
-        className={`rail-btn ${activeView === 'chat' ? 'active' : ''}`}
-        title="Chat Workbench"
-        onClick={onSelectChat}
-      >
-        <MessageSquare size={17} />
-      </button>
-      <button
-        className={`rail-btn ${activeView === 'agents' ? 'active' : ''}`}
-        title="Agent Swarm"
+        className={`wg-rail-btn ${activeView === 'agents' ? 'is-active' : ''}`}
+        title="Agent swarm"
+        aria-label="Agent swarm"
+        aria-current={activeView === 'agents'}
         onClick={onSelectAgents}
+        data-layout="software"
       >
-        <Bot size={17} />
+        <Bot size={16} />
       </button>
-      <button className="rail-btn" title="Explorer" onClick={onToggleSidebar}>
-        <FolderTree size={17} />
-      </button>
-      <button className="rail-btn" title="Built-in Browser" onClick={onSelectBrowser}>
-        <Globe size={17} />
-      </button>
-      <button className="rail-btn" title="MCP & Skills" onClick={onOpenMcpSettings}>
-        <Puzzle size={17} />
-      </button>
-      <div className="rail-spacer" />
-      <button className="rail-btn" title="Settings (Ctrl+,)" onClick={onOpenSettings}>
-        <Settings size={17} />
-      </button>
-    </nav>
-  );
-};
+    )}
+    <button
+      className={`wg-rail-btn ${activeView === 'files' ? 'is-active' : ''}`}
+      title="Explorer"
+      aria-label="Explorer"
+      onClick={onToggleSidebar}
+    >
+      <FolderTree size={16} />
+    </button>
+    <button className="wg-rail-btn" title="Plugins and connectors" aria-label="Plugins and connectors" onClick={onOpenExtensions}>
+      <Puzzle size={16} />
+    </button>
+    <div className="wg-rail-spacer" />
+    <button className="wg-rail-btn" title="Settings" aria-label="Settings" onClick={onOpenSettings}>
+      <Settings size={16} />
+    </button>
+  </nav>
+);

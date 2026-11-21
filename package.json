@@ -1,6 +1,7 @@
 {
   "name": "tervixa-wiggle",
   "private": true,
+  "version": "1.0.0",
   "workspaces": [
     "apps/desktop-ui"
   ],
@@ -8,9 +9,16 @@
     "dev": "npm run dev -w @wiggle/desktop-ui",
     "build": "npm run build -w @wiggle/desktop-ui",
     "start": "node server/main.mjs",
-    "test": "node --test"
+    "desktop": "cd crates/wiggle-desktop && npx tauri dev",
+    "desktop:build": "cd crates/wiggle-desktop && npx tauri build",
+    "sync:marketplace": "node scripts/sync-marketplace.mjs",
+    "build:connectors": "node scripts/build-connectors.mjs",
+    "test": "node --test test/"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.12.4"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2"
   }
 }

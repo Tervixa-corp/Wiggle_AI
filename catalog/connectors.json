@@ -1,0 +1,1283 @@
+[
+  {
+    "id": "github",
+    "name": "GitHub",
+    "vendor": "GitHub",
+    "category": "development",
+    "description": "Repositories, issues, pull requests and code search.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://api.githubcopilot.com/mcp/",
+    "auth": "token",
+    "docs": "https://github.com/github/github-mcp-server"
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab",
+    "vendor": "GitLab",
+    "category": "development",
+    "description": "Projects, merge requests and pipelines through the official GitLab MCP server.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://gitlab.com/api/v4/mcp",
+    "auth": "oauth",
+    "docs": "https://docs.gitlab.com/user/gitlab_duo/model_context_protocol/mcp_server/"
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "vendor": "Sentry",
+    "category": "development",
+    "description": "Errors, traces and releases.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.sentry.dev/mcp",
+    "auth": "oauth",
+    "docs": "https://docs.sentry.io/product/sentry-mcp/"
+  },
+  {
+    "id": "postman",
+    "name": "Postman",
+    "vendor": "Postman",
+    "category": "development",
+    "description": "API collections, environments and mock servers.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.postman.com/minimal",
+    "auth": "oauth",
+    "docs": "https://learning.postman.com/docs/developer/postman-api/intro-api/"
+  },
+  {
+    "id": "semgrep",
+    "name": "Semgrep",
+    "vendor": "Semgrep",
+    "category": "development",
+    "description": "Static analysis findings and secure-code guidance.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.semgrep.dev/mcp",
+    "auth": "oauth",
+    "docs": "https://semgrep.dev/docs/"
+  },
+  {
+    "id": "context7",
+    "name": "Context7",
+    "vendor": "Upstash",
+    "category": "development",
+    "description": "Version-accurate library documentation for coding agents.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.context7.com/mcp",
+    "auth": "none",
+    "docs": "https://github.com/upstash/context7"
+  },
+  {
+    "id": "deepwiki",
+    "name": "DeepWiki",
+    "vendor": "Cognition",
+    "category": "development",
+    "description": "Ask questions about any public GitHub repository.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.deepwiki.com/mcp",
+    "auth": "none",
+    "docs": "https://deepwiki.com"
+  },
+  {
+    "id": "huggingface",
+    "name": "Hugging Face",
+    "vendor": "Hugging Face",
+    "category": "development",
+    "description": "Models, datasets and Spaces.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://huggingface.co/mcp",
+    "auth": "oauth",
+    "docs": "https://huggingface.co/docs/hub/mcp"
+  },
+  {
+    "id": "apify",
+    "name": "Apify",
+    "vendor": "Apify",
+    "category": "development",
+    "description": "Run actors and scrape structured web data.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.apify.com",
+    "auth": "token",
+    "docs": "https://docs.apify.com/platform/integrations/mcp"
+  },
+  {
+    "id": "firecrawl",
+    "name": "Firecrawl",
+    "vendor": "Firecrawl",
+    "category": "development",
+    "description": "Crawl, scrape and extract content from websites.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.firecrawl.dev/v2/mcp",
+    "auth": "token",
+    "docs": "https://docs.firecrawl.dev/mcp"
+  },
+  {
+    "id": "browserbase",
+    "name": "Browserbase",
+    "vendor": "Browserbase",
+    "category": "development",
+    "description": "Cloud browser sessions for agents.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.browserbase.com/mcp",
+    "auth": "token",
+    "docs": "https://docs.browserbase.com/"
+  },
+  {
+    "id": "exa",
+    "name": "Exa",
+    "vendor": "Exa",
+    "category": "development",
+    "description": "Neural web search for agents.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.exa.ai/mcp",
+    "auth": "token",
+    "docs": "https://docs.exa.ai/reference/exa-mcp"
+  },
+  {
+    "id": "e2b",
+    "name": "E2B",
+    "vendor": "E2B",
+    "category": "development",
+    "description": "Sandboxed code execution environments.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.e2b.dev/mcp",
+    "auth": "token",
+    "docs": "https://e2b.dev/docs"
+  },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "vendor": "Supabase",
+    "category": "database",
+    "description": "Postgres projects, SQL and edge functions.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.supabase.com/mcp",
+    "auth": "oauth",
+    "docs": "https://supabase.com/docs/guides/getting-started/mcp"
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "vendor": "Neon",
+    "category": "database",
+    "description": "Serverless Postgres projects and branches.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.neon.tech/mcp",
+    "auth": "oauth",
+    "docs": "https://neon.tech/docs/ai/neon-mcp-server"
+  },
+  {
+    "id": "clickhouse",
+    "name": "ClickHouse",
+    "vendor": "ClickHouse",
+    "category": "database",
+    "description": "Query ClickHouse Cloud databases.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.clickhouse.cloud/mcp",
+    "auth": "oauth",
+    "docs": "https://clickhouse.com/docs/use-cases/AI/MCP"
+  },
+  {
+    "id": "astra",
+    "name": "Astra DB",
+    "vendor": "DataStax",
+    "category": "database",
+    "description": "Serverless vector database collections.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://api.astra.datastax.com/v2/mcp",
+    "auth": "token",
+    "docs": "https://docs.datastax.com/en/astra-db-serverless/"
+  },
+  {
+    "id": "sanity",
+    "name": "Sanity",
+    "vendor": "Sanity",
+    "category": "database",
+    "description": "Content lake documents and schemas.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.sanity.io/mcp",
+    "auth": "oauth",
+    "docs": "https://www.sanity.io/docs"
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma Postgres",
+    "vendor": "Prisma",
+    "category": "database",
+    "description": "Managed Postgres through Prisma.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.prisma.io/mcp",
+    "auth": "oauth",
+    "docs": "https://www.prisma.io/docs"
+  },
+  {
+    "id": "snowflake",
+    "name": "Snowflake",
+    "vendor": "Snowflake",
+    "category": "database",
+    "description": "Warehouse queries through the hosted Snowflake connector.",
+    "kind": "hosted",
+    "docs": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp"
+  },
+  {
+    "id": "databricks",
+    "name": "Databricks",
+    "vendor": "Databricks",
+    "category": "database",
+    "description": "Lakehouse SQL and notebooks through the hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.databricks.com/aws/en/generative-ai/mcp/"
+  },
+  {
+    "id": "bigquery",
+    "name": "BigQuery",
+    "vendor": "Google Cloud",
+    "category": "database",
+    "description": "Warehouse queries through the Google Cloud connector.",
+    "kind": "hosted",
+    "docs": "https://cloud.google.com/bigquery/docs"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "vendor": "MongoDB",
+    "category": "database",
+    "description": "Atlas clusters through the hosted MongoDB connector.",
+    "kind": "hosted",
+    "docs": "https://www.mongodb.com/docs/mcp-server/"
+  },
+  {
+    "id": "redis",
+    "name": "Redis",
+    "vendor": "Redis",
+    "category": "database",
+    "description": "Cloud databases through the Redis connector.",
+    "kind": "hosted",
+    "docs": "https://redis.io/docs/latest/develop/ai/mcp/"
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "vendor": "Notion",
+    "category": "productivity",
+    "description": "Workspace pages, databases and comments.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.notion.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.notion.com/docs/mcp"
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "vendor": "Linear",
+    "category": "productivity",
+    "description": "Issues, projects and team context.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.linear.app/mcp",
+    "auth": "oauth",
+    "docs": "https://linear.app/docs/mcp"
+  },
+  {
+    "id": "atlassian",
+    "name": "Atlassian Rovo",
+    "vendor": "Atlassian",
+    "category": "productivity",
+    "description": "Jira issues and Confluence pages.",
+    "kind": "mcp",
+    "transport": "sse",
+    "url": "https://mcp.atlassian.com/v1/sse",
+    "auth": "oauth",
+    "docs": "https://support.atlassian.com/atlassian-rovo-mcp-server/"
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "vendor": "Asana",
+    "category": "productivity",
+    "description": "Tasks, projects and portfolios.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.asana.com/v2/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.asana.com/docs/using-asanas-model-context-protocol-mcp-server"
+  },
+  {
+    "id": "monday",
+    "name": "monday.com",
+    "vendor": "monday.com",
+    "category": "productivity",
+    "description": "Boards, items and automations.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.monday.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developer.monday.com/apps/docs/mondaycom-mcp"
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "vendor": "Airtable",
+    "category": "productivity",
+    "description": "Bases records and schemas.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.airtable.com/mcp",
+    "auth": "oauth",
+    "docs": "https://support.airtable.com/docs/airtable-mcp-server"
+  },
+  {
+    "id": "smartsheet",
+    "name": "Smartsheet",
+    "vendor": "Smartsheet",
+    "category": "productivity",
+    "description": "Sheets, rows and attachments.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.smartsheet.com",
+    "auth": "oauth",
+    "docs": "https://developers.smartsheet.com/"
+  },
+  {
+    "id": "miro",
+    "name": "Miro",
+    "vendor": "Miro",
+    "category": "productivity",
+    "description": "Boards, frames and sticky notes.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.miro.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.miro.com/docs/miro-mcp"
+  },
+  {
+    "id": "canva",
+    "name": "Canva",
+    "vendor": "Canva",
+    "category": "productivity",
+    "description": "Designs, assets and brand templates.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.canva.com/mcp",
+    "auth": "oauth",
+    "docs": "https://www.canva.dev/docs/connect/"
+  },
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "vendor": "HubSpot",
+    "category": "productivity",
+    "description": "CRM contacts, companies and deals.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.hubspot.com",
+    "auth": "oauth",
+    "docs": "https://developers.hubspot.com/mcp"
+  },
+  {
+    "id": "intercom",
+    "name": "Intercom",
+    "vendor": "Intercom",
+    "category": "productivity",
+    "description": "Conversations, contacts and help-centre content.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.intercom.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.intercom.com/"
+  },
+  {
+    "id": "pagerduty",
+    "name": "PagerDuty",
+    "vendor": "PagerDuty",
+    "category": "productivity",
+    "description": "Incidents, schedules and on-call context.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.pagerduty.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developer.pagerduty.com/"
+  },
+  {
+    "id": "attio",
+    "name": "Attio",
+    "vendor": "Attio",
+    "category": "productivity",
+    "description": "CRM records and workflows.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.attio.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.attio.com/"
+  },
+  {
+    "id": "gmail",
+    "name": "Gmail",
+    "vendor": "Google",
+    "category": "productivity",
+    "description": "Read, search and draft email. Hosted by Claude and ChatGPT.",
+    "kind": "hosted",
+    "docs": "https://support.google.com/mail/answer/15082318"
+  },
+  {
+    "id": "google-calendar",
+    "name": "Google Calendar",
+    "vendor": "Google",
+    "category": "productivity",
+    "description": "Calendars, events and availability. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://support.google.com/calendar/answer/15082318"
+  },
+  {
+    "id": "google-drive",
+    "name": "Google Drive",
+    "vendor": "Google",
+    "category": "productivity",
+    "description": "Files and documents. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://support.google.com/drive/answer/15082318"
+  },
+  {
+    "id": "google-docs",
+    "name": "Google Docs",
+    "vendor": "Google",
+    "category": "productivity",
+    "description": "Documents and comments. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://workspace.google.com/products/docs/"
+  },
+  {
+    "id": "microsoft-outlook",
+    "name": "Outlook Mail",
+    "vendor": "Microsoft",
+    "category": "productivity",
+    "description": "Mail and calendar through Microsoft 365. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/microsoft-365-copilot/"
+  },
+  {
+    "id": "microsoft-teams",
+    "name": "Microsoft Teams",
+    "vendor": "Microsoft",
+    "category": "productivity",
+    "description": "Chats, channels and meetings. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/microsoftteams/"
+  },
+  {
+    "id": "onedrive",
+    "name": "OneDrive",
+    "vendor": "Microsoft",
+    "category": "productivity",
+    "description": "Files and folders in Microsoft 365. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/onedrive/"
+  },
+  {
+    "id": "sharepoint",
+    "name": "SharePoint",
+    "vendor": "Microsoft",
+    "category": "productivity",
+    "description": "Sites and document libraries. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/sharepoint/"
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "vendor": "Salesforce",
+    "category": "productivity",
+    "description": "Channels, messages and search. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.slack.dev/ai/slack-mcp-server/"
+  },
+  {
+    "id": "dropbox",
+    "name": "Dropbox",
+    "vendor": "Dropbox",
+    "category": "productivity",
+    "description": "Files and shared links. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://help.dropbox.com/integrations/ai"
+  },
+  {
+    "id": "box",
+    "name": "Box",
+    "vendor": "Box",
+    "category": "productivity",
+    "description": "Content and metadata. Box publishes a remote MCP server for enterprise tenants.",
+    "kind": "hosted",
+    "docs": "https://developer.box.com/guides/box-mcp/"
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "vendor": "Zoom",
+    "category": "productivity",
+    "description": "Meetings and transcripts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.zoom.us/docs/"
+  },
+  {
+    "id": "calendly",
+    "name": "Calendly",
+    "vendor": "Calendly",
+    "category": "productivity",
+    "description": "Scheduling links and events. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.calendly.com/"
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "vendor": "Atlassian",
+    "category": "productivity",
+    "description": "Boards, lists and cards. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.atlassian.com/cloud/trello/"
+  },
+  {
+    "id": "clickup",
+    "name": "ClickUp",
+    "vendor": "ClickUp",
+    "category": "productivity",
+    "description": "Tasks, docs and goals. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.clickup.com/"
+  },
+  {
+    "id": "coda",
+    "name": "Coda",
+    "vendor": "Coda",
+    "category": "productivity",
+    "description": "Docs, tables and packs. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://coda.io/developers"
+  },
+  {
+    "id": "egnyte",
+    "name": "Egnyte",
+    "vendor": "Egnyte",
+    "category": "productivity",
+    "description": "Enterprise content. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.egnyte.com/"
+  },
+  {
+    "id": "zapier",
+    "name": "Zapier",
+    "vendor": "Zapier",
+    "category": "automation",
+    "description": "Run Zaps and thousands of app actions.",
+    "kind": "hosted",
+    "docs": "https://zapier.com/mcp"
+  },
+  {
+    "id": "make",
+    "name": "Make",
+    "vendor": "Make",
+    "category": "automation",
+    "description": "Scenario automation across connected apps.",
+    "kind": "hosted",
+    "docs": "https://www.make.com/en/help/apps/make-mcp"
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "vendor": "Stripe",
+    "category": "finance",
+    "description": "Payments, customers and product catalog.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.stripe.com",
+    "auth": "oauth",
+    "docs": "https://docs.stripe.com/mcp"
+  },
+  {
+    "id": "paypal",
+    "name": "PayPal",
+    "vendor": "PayPal",
+    "category": "finance",
+    "description": "Transactions, invoices and disputes.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.paypal.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developer.paypal.com/"
+  },
+  {
+    "id": "square",
+    "name": "Square",
+    "vendor": "Block",
+    "category": "finance",
+    "description": "Payments, orders and catalog.",
+    "kind": "mcp",
+    "transport": "sse",
+    "url": "https://mcp.squareup.com/sse",
+    "auth": "oauth",
+    "docs": "https://developer.squareup.com/docs/mcp"
+  },
+  {
+    "id": "quickbooks",
+    "name": "QuickBooks",
+    "vendor": "Intuit",
+    "category": "finance",
+    "description": "Accounting data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.intuit.com/"
+  },
+  {
+    "id": "xero",
+    "name": "Xero",
+    "vendor": "Xero",
+    "category": "finance",
+    "description": "Accounting and invoices. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.xero.com/"
+  },
+  {
+    "id": "ramp",
+    "name": "Ramp",
+    "vendor": "Ramp",
+    "category": "finance",
+    "description": "Spend, cards and approvals. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.ramp.com/"
+  },
+  {
+    "id": "brex",
+    "name": "Brex",
+    "vendor": "Brex",
+    "category": "finance",
+    "description": "Cards and expenses. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.brex.com/"
+  },
+  {
+    "id": "plaid",
+    "name": "Plaid",
+    "vendor": "Plaid",
+    "category": "finance",
+    "description": "Bank account data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://plaid.com/docs/"
+  },
+  {
+    "id": "amplitude",
+    "name": "Amplitude",
+    "vendor": "Amplitude",
+    "category": "analytics",
+    "description": "Product analytics charts and cohorts.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.amplitude.com/mcp",
+    "auth": "oauth",
+    "docs": "https://amplitude.com/docs"
+  },
+  {
+    "id": "mixpanel",
+    "name": "Mixpanel",
+    "vendor": "Mixpanel",
+    "category": "analytics",
+    "description": "Events, funnels and retention.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.mixpanel.com/mcp",
+    "auth": "oauth",
+    "docs": "https://docs.mixpanel.com/"
+  },
+  {
+    "id": "hex",
+    "name": "Hex",
+    "vendor": "Hex",
+    "category": "analytics",
+    "description": "Notebooks, projects and data apps.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://app.hex.tech/mcp",
+    "auth": "oauth",
+    "docs": "https://learn.hex.tech/docs"
+  },
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "vendor": "PostHog",
+    "category": "analytics",
+    "description": "Product analytics and session replay. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://posthog.com/docs/model-context-protocol"
+  },
+  {
+    "id": "datadog",
+    "name": "Datadog",
+    "vendor": "Datadog",
+    "category": "monitoring",
+    "description": "Metrics, logs and monitors. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.datadoghq.com/"
+  },
+  {
+    "id": "grafana",
+    "name": "Grafana",
+    "vendor": "Grafana Labs",
+    "category": "monitoring",
+    "description": "Dashboards and alerts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://grafana.com/docs/grafana/latest/"
+  },
+  {
+    "id": "honeycomb",
+    "name": "Honeycomb",
+    "vendor": "Honeycomb",
+    "category": "monitoring",
+    "description": "Traces and queries. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.honeycomb.io/"
+  },
+  {
+    "id": "new-relic",
+    "name": "New Relic",
+    "vendor": "New Relic",
+    "category": "monitoring",
+    "description": "APM and alerts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.newrelic.com/"
+  },
+  {
+    "id": "dynatrace",
+    "name": "Dynatrace",
+    "vendor": "Dynatrace",
+    "category": "monitoring",
+    "description": "Observability data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.dynatrace.com/"
+  },
+  {
+    "id": "cloudflare-docs",
+    "name": "Cloudflare Developer Docs",
+    "vendor": "Cloudflare",
+    "category": "deployment",
+    "description": "Search Cloudflare documentation from an agent.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://docs.mcp.cloudflare.com/mcp",
+    "auth": "none",
+    "docs": "https://developers.cloudflare.com/agents/model-context-protocol/"
+  },
+  {
+    "id": "cloudflare-observability",
+    "name": "Cloudflare Observability",
+    "vendor": "Cloudflare",
+    "category": "deployment",
+    "description": "Logs and analytics for Cloudflare accounts.",
+    "kind": "mcp",
+    "transport": "sse",
+    "url": "https://observability.mcp.cloudflare.com/sse",
+    "auth": "oauth",
+    "docs": "https://developers.cloudflare.com/agents/model-context-protocol/"
+  },
+  {
+    "id": "cloudflare-bindings",
+    "name": "Cloudflare Bindings",
+    "vendor": "Cloudflare",
+    "category": "deployment",
+    "description": "Workers KV, R2 and D1 bindings.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://bindings.mcp.cloudflare.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.cloudflare.com/agents/model-context-protocol/"
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "vendor": "Vercel",
+    "category": "deployment",
+    "description": "Projects, deployments and logs.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.vercel.com",
+    "auth": "oauth",
+    "docs": "https://vercel.com/docs/mcp/vercel-mcp"
+  },
+  {
+    "id": "railway",
+    "name": "Railway",
+    "vendor": "Railway",
+    "category": "deployment",
+    "description": "Projects, services and deployments.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.railway.com/mcp",
+    "auth": "oauth",
+    "docs": "https://docs.railway.com/"
+  },
+  {
+    "id": "render",
+    "name": "Render",
+    "vendor": "Render",
+    "category": "deployment",
+    "description": "Services, deploys and logs.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.render.com/mcp",
+    "auth": "oauth",
+    "docs": "https://render.com/docs"
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "vendor": "Netlify",
+    "category": "deployment",
+    "description": "Sites, deploys and environment variables.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.netlify.com/mcp",
+    "auth": "oauth",
+    "docs": "https://docs.netlify.com/"
+  },
+  {
+    "id": "heroku",
+    "name": "Heroku",
+    "vendor": "Salesforce",
+    "category": "deployment",
+    "description": "Apps, dynos and releases.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.heroku.com/mcp",
+    "auth": "oauth",
+    "docs": "https://devcenter.heroku.com/"
+  },
+  {
+    "id": "wix",
+    "name": "Wix",
+    "vendor": "Wix",
+    "category": "deployment",
+    "description": "Sites, content and ecommerce.",
+    "kind": "mcp",
+    "transport": "sse",
+    "url": "https://mcp.wix.com/sse",
+    "auth": "oauth",
+    "docs": "https://dev.wix.com/docs"
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "vendor": "Shopify",
+    "category": "deployment",
+    "description": "Store data and the Admin GraphQL API.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.shopify.dev/mcp",
+    "auth": "oauth",
+    "docs": "https://shopify.dev/docs/apps/build/ai-toolkit"
+  },
+  {
+    "id": "aws",
+    "name": "AWS",
+    "vendor": "Amazon",
+    "category": "deployment",
+    "description": "AWS resources. Anthropic hosts an AWS connector; the AWS MCP servers run locally.",
+    "kind": "hosted",
+    "docs": "https://github.com/awslabs/mcp"
+  },
+  {
+    "id": "google-cloud",
+    "name": "Google Cloud",
+    "vendor": "Google",
+    "category": "deployment",
+    "description": "Google Cloud resources. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://cloud.google.com/"
+  },
+  {
+    "id": "azure",
+    "name": "Microsoft Azure",
+    "vendor": "Microsoft",
+    "category": "deployment",
+    "description": "Azure resources. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/azure/"
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "vendor": "Docker",
+    "category": "deployment",
+    "description": "Containers and the Docker MCP catalog gateway.",
+    "kind": "hosted",
+    "docs": "https://docs.docker.com/ai/mcp-catalog-and-toolkit/"
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "vendor": "CNCF",
+    "category": "deployment",
+    "description": "Cluster resources through local MCP servers.",
+    "kind": "hosted",
+    "docs": "https://kubernetes.io/docs/"
+  },
+  {
+    "id": "terraform",
+    "name": "Terraform",
+    "vendor": "HashiCorp",
+    "category": "deployment",
+    "description": "Infrastructure state and plans through the Terraform MCP server.",
+    "kind": "hosted",
+    "docs": "https://developer.hashicorp.com/terraform/mcp-server"
+  },
+  {
+    "id": "pulumi",
+    "name": "Pulumi",
+    "vendor": "Pulumi",
+    "category": "deployment",
+    "description": "Infrastructure as code. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://www.pulumi.com/docs/"
+  },
+  {
+    "id": "launchdarkly",
+    "name": "LaunchDarkly",
+    "vendor": "LaunchDarkly",
+    "category": "deployment",
+    "description": "Feature flags and experiments. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://launchdarkly.com/docs/"
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "vendor": "Figma",
+    "category": "design",
+    "description": "Design files, components and variables.",
+    "kind": "mcp",
+    "transport": "http",
+    "url": "https://mcp.figma.com/mcp",
+    "auth": "oauth",
+    "docs": "https://developers.figma.com/docs/figma-mcp-server/"
+  },
+  {
+    "id": "adobe",
+    "name": "Adobe Creative Cloud",
+    "vendor": "Adobe",
+    "category": "design",
+    "description": "Creative Cloud assets. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.adobe.com/"
+  },
+  {
+    "id": "framer",
+    "name": "Framer",
+    "vendor": "Framer",
+    "category": "design",
+    "description": "Sites and components. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://www.framer.com/developers/"
+  },
+  {
+    "id": "webflow",
+    "name": "Webflow",
+    "vendor": "Webflow",
+    "category": "design",
+    "description": "Sites and CMS collections. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.webflow.com/"
+  },
+  {
+    "id": "wordpress",
+    "name": "WordPress",
+    "vendor": "Automattic",
+    "category": "design",
+    "description": "Posts, pages and media. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.wordpress.com/"
+  },
+  {
+    "id": "amazon-seller",
+    "name": "Amazon Seller",
+    "vendor": "Amazon",
+    "category": "commerce",
+    "description": "Listings and orders. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.amazonservices.com/"
+  },
+  {
+    "id": "etsy",
+    "name": "Etsy",
+    "vendor": "Etsy",
+    "category": "commerce",
+    "description": "Shop listings and orders. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.etsy.com/"
+  },
+  {
+    "id": "ebay",
+    "name": "eBay",
+    "vendor": "eBay",
+    "category": "commerce",
+    "description": "Listings and orders. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.ebay.com/"
+  },
+  {
+    "id": "bigcommerce",
+    "name": "BigCommerce",
+    "vendor": "BigCommerce",
+    "category": "commerce",
+    "description": "Catalog and orders. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.bigcommerce.com/"
+  },
+  {
+    "id": "woocommerce",
+    "name": "WooCommerce",
+    "vendor": "Automattic",
+    "category": "commerce",
+    "description": "Store data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://woocommerce.com/documentation/"
+  },
+  {
+    "id": "google-ads",
+    "name": "Google Ads",
+    "vendor": "Google",
+    "category": "marketing",
+    "description": "Campaign performance. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.google.com/google-ads"
+  },
+  {
+    "id": "meta-ads",
+    "name": "Meta Ads",
+    "vendor": "Meta",
+    "category": "marketing",
+    "description": "Campaign performance. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.facebook.com/docs/marketing-apis/"
+  },
+  {
+    "id": "linkedin-ads",
+    "name": "LinkedIn Ads",
+    "vendor": "Microsoft",
+    "category": "marketing",
+    "description": "Campaign performance. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://learn.microsoft.com/linkedin/marketing/"
+  },
+  {
+    "id": "tiktok-ads",
+    "name": "TikTok Ads",
+    "vendor": "ByteDance",
+    "category": "marketing",
+    "description": "Campaign performance. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://business-api.tiktok.com/portal/docs"
+  },
+  {
+    "id": "klaviyo",
+    "name": "Klaviyo",
+    "vendor": "Klaviyo",
+    "category": "marketing",
+    "description": "Email and SMS marketing. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.klaviyo.com/"
+  },
+  {
+    "id": "mailchimp",
+    "name": "Mailchimp",
+    "vendor": "Intuit",
+    "category": "marketing",
+    "description": "Audiences and campaigns. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://mailchimp.com/developer/"
+  },
+  {
+    "id": "semrush",
+    "name": "Semrush",
+    "vendor": "Semrush",
+    "category": "marketing",
+    "description": "SEO and competitive data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.semrush.com/"
+  },
+  {
+    "id": "ahrefs",
+    "name": "Ahrefs",
+    "vendor": "Ahrefs",
+    "category": "marketing",
+    "description": "SEO and backlink data. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.ahrefs.com/"
+  },
+  {
+    "id": "zendesk",
+    "name": "Zendesk",
+    "vendor": "Zendesk",
+    "category": "support",
+    "description": "Tickets and help-centre articles. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.zendesk.com/"
+  },
+  {
+    "id": "freshdesk",
+    "name": "Freshdesk",
+    "vendor": "Freshworks",
+    "category": "support",
+    "description": "Tickets and contacts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.freshdesk.com/"
+  },
+  {
+    "id": "front",
+    "name": "Front",
+    "vendor": "Front",
+    "category": "support",
+    "description": "Shared inboxes. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://dev.frontapp.com/"
+  },
+  {
+    "id": "helpscout",
+    "name": "Help Scout",
+    "vendor": "Help Scout",
+    "category": "support",
+    "description": "Conversations and docs. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.helpscout.com/"
+  },
+  {
+    "id": "salesforce",
+    "name": "Salesforce",
+    "vendor": "Salesforce",
+    "category": "sales",
+    "description": "CRM records. Hosted connector plus a local Salesforce MCP server.",
+    "kind": "hosted",
+    "docs": "https://developer.salesforce.com/"
+  },
+  {
+    "id": "pipedrive",
+    "name": "Pipedrive",
+    "vendor": "Pipedrive",
+    "category": "sales",
+    "description": "Deals and contacts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.pipedrive.com/"
+  },
+  {
+    "id": "outreach",
+    "name": "Outreach",
+    "vendor": "Outreach",
+    "category": "sales",
+    "description": "Sequences and prospects. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.outreach.io/"
+  },
+  {
+    "id": "salesloft",
+    "name": "Salesloft",
+    "vendor": "Salesloft",
+    "category": "sales",
+    "description": "Cadences and conversations. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.salesloft.com/"
+  },
+  {
+    "id": "greenhouse",
+    "name": "Greenhouse",
+    "vendor": "Greenhouse",
+    "category": "people",
+    "description": "Candidates and jobs. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.greenhouse.io/"
+  },
+  {
+    "id": "ashby",
+    "name": "Ashby",
+    "vendor": "Ashby",
+    "category": "people",
+    "description": "Recruiting pipeline. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.ashbyhq.com/"
+  },
+  {
+    "id": "workday",
+    "name": "Workday",
+    "vendor": "Workday",
+    "category": "people",
+    "description": "HR and finance. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://community.workday.com/"
+  },
+  {
+    "id": "bamboohr",
+    "name": "BambooHR",
+    "vendor": "BambooHR",
+    "category": "people",
+    "description": "Employee records. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://documentation.bamboohr.com/"
+  },
+  {
+    "id": "gusto",
+    "name": "Gusto",
+    "vendor": "Gusto",
+    "category": "people",
+    "description": "Payroll and benefits. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://docs.gusto.com/"
+  },
+  {
+    "id": "deel",
+    "name": "Deel",
+    "vendor": "Deel",
+    "category": "people",
+    "description": "Global payroll and contracts. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.deel.com/"
+  },
+  {
+    "id": "docusign",
+    "name": "DocuSign",
+    "vendor": "DocuSign",
+    "category": "legal",
+    "description": "Envelopes and signatures. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.docusign.com/"
+  },
+  {
+    "id": "ironclad",
+    "name": "Ironclad",
+    "vendor": "Ironclad",
+    "category": "legal",
+    "description": "Contract workflows. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developer.ironcladapp.com/"
+  },
+  {
+    "id": "pandadoc",
+    "name": "PandaDoc",
+    "vendor": "PandaDoc",
+    "category": "legal",
+    "description": "Documents and templates. Hosted connector.",
+    "kind": "hosted",
+    "docs": "https://developers.pandadoc.com/"
+  }
+]

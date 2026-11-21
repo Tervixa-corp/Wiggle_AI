@@ -3,3 +3,17 @@ dist/
 target/
 .wiggle/
 releases/
+
+# Generated installer payloads and toolchain downloads
+packaging/stage/
+packaging/webview2/
+packaging/webview2.zip
+packaging/*.nupkg
+packaging/*.log
+crates/wiggle-desktop/resources/
+
+.scratch/
+
+# Generated verification captures and working notes
+docs/ui-verify/
+docs/settings-inventory/

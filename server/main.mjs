@@ -1,5 +1,15 @@
+import path from 'node:path';
 import { createApp, readConfig } from './app.mjs';
-const port = Number(process.env.WIGGLE_PORT || 4317);
+
+const env = process.env;
+const config = readConfig(env);
+const workspaceRoot = path.resolve(env.WIGGLE_WORKSPACE || process.cwd());
+const port = config.port;
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid WIGGLE_PORT');
-const config = readConfig();
-createApp({ config }).listen(port, '127.0.0.1', () => console.log(`Wiggle local UI: http://127.0.0.1:${port} (${config.model ? `model: ${config.model}` : 'no model configured'})`));
+
+const app = createApp({ workspaceRoot });
+app.listen(port, '127.0.0.1', () => {
+  console.log(`Tervixa Wiggle — http://127.0.0.1:${port}`);
+  console.log(`Workspace: ${workspaceRoot}`);
+  console.log('Developed by Tervixa Corporation.');
+});

@@ -1,0 +1,937 @@
+/* OpenCode v2 tokens, transcribed from the cloned sst/opencode source.
+ *
+ * Ramps: packages/ui/src/theme/v2/default-primitives.ts
+ * Semantic mapping (dark and light): packages/ui/src/theme/v2/mapping.ts
+ * Type scale: packages/ui/src/styles/theme.css
+ * Settings geometry: packages/app/src/settings/settings.css
+ * Chat metrics: packages/session-ui/src/components/session-turn.css
+ *
+ * Dark is OpenCode's v2 graphite: bg-deep #161616, bg-base #242424,
+ * layer-01 #3a3a3a, text #fafafa. Light keeps the same structure but uses the
+ * cream surface requested for this app instead of OpenCode's #fafafa.
+ */
+
+:root {
+  /* v2 grey ramp, exactly as published. */
+  --v2-grey-50: #ffffff;
+  --v2-grey-100: #fafafa;
+  --v2-grey-200: #f2f2f2;
+  --v2-grey-300: #eeeeee;
+  --v2-grey-400: #dbdbdb;
+  --v2-grey-500: #aeaeae;
+  --v2-grey-600: #808080;
+  --v2-grey-700: #5c5c5c;
+  --v2-grey-800: #3a3a3a;
+  --v2-grey-900: #2e2e2e;
+  --v2-grey-1000: #242424;
+  --v2-grey-1100: #161616;
+  --v2-grey-1200: #080808;
+
+  --v2-alpha-dark-4: rgba(8, 8, 8, 0.04);
+  --v2-alpha-dark-8: rgba(8, 8, 8, 0.08);
+  --v2-alpha-dark-10: rgba(8, 8, 8, 0.1);
+  --v2-alpha-dark-12: rgba(8, 8, 8, 0.12);
+  --v2-alpha-dark-24: rgba(8, 8, 8, 0.24);
+  --v2-alpha-dark-40: rgba(8, 8, 8, 0.4);
+  --v2-alpha-dark-60: rgba(8, 8, 8, 0.6);
+  --v2-alpha-light-4: rgba(255, 255, 255, 0.04);
+  --v2-alpha-light-6: rgba(255, 255, 255, 0.06);
+  --v2-alpha-light-8: rgba(255, 255, 255, 0.08);
+  --v2-alpha-light-10: rgba(255, 255, 255, 0.1);
+  --v2-alpha-light-16: rgba(255, 255, 255, 0.16);
+  --v2-alpha-light-20: rgba(255, 255, 255, 0.2);
+  --v2-alpha-light-24: rgba(36, 36, 36, 0.24);
+  --v2-alpha-light-40: rgba(36, 36, 36, 0.4);
+  --v2-alpha-light-60: rgba(36, 36, 36, 0.6);
+  --v2-alpha-light-80: rgba(36, 36, 36, 0.8);
+
+  /* Type scale from OpenCode's theme.css. */
+  --font-size-small: 13px;
+  --font-size-base: 14px;
+  --font-size-large: 16px;
+  --font-size-x-large: 20px;
+  --font-weight-regular: 440;
+  --font-weight-medium: 530;
+  --font-weight-bold: 670;
+  --line-height-normal: 130%;
+  --line-height-large: 150%;
+
+  --settings-width: 1048px;
+  --settings-sidebar-width: 328px;
+  --settings-content-width: 720px;
+
+  --wg-font-size: 14px;
+  --wg-font-small: 13px;
+  --wg-font-large: 16px;
+  --wg-space-1: 4px;
+  --wg-space-2: 8px;
+  --wg-space-3: 12px;
+  --wg-space-4: 16px;
+  --wg-space-5: 24px;
+  --wg-radius-sm: 4px;
+  --wg-radius-md: 6px;
+  --wg-radius-lg: 10px;
+}
+
+/* --------------------------------- dark ----------------------------------- */
+
+:root,
+:root[data-theme='dark'],
+:root[data-theme='graphite'] {
+  color-scheme: dark;
+
+  /* Semantic tokens, exactly the dark mapping from mapping.ts. */
+  --v2-background-bg-base: var(--v2-grey-1000);
+  --v2-background-bg-deep: var(--v2-grey-1100);
+  --v2-background-bg-layer-01: var(--v2-grey-800);
+  --v2-background-bg-layer-02: var(--v2-grey-600);
+  --v2-background-bg-contrast: var(--v2-grey-700);
+  --v2-text-text-base: var(--v2-grey-100);
+  --v2-text-text-muted: var(--v2-grey-500);
+  --v2-text-text-faint: var(--v2-grey-600);
+  --v2-text-text-inverse: var(--v2-grey-1000);
+  --v2-border-border-muted: var(--v2-alpha-light-8);
+  --v2-border-border-base: var(--v2-alpha-light-10);
+  --v2-border-border-strong: var(--v2-alpha-light-20);
+  --v2-overlay-hover: var(--v2-alpha-light-6);
+  --v2-overlay-pressed: var(--v2-alpha-light-10);
+
+  --wg-bg: var(--v2-grey-1100);
+  --wg-panel: var(--v2-grey-1000);
+  --wg-raised: var(--v2-grey-900);
+  --wg-float: var(--v2-grey-800);
+  --wg-surface-1: var(--v2-alpha-light-6);
+  --wg-surface-2: var(--v2-alpha-light-8);
+  --wg-surface-3: var(--v2-alpha-light-10);
+  --wg-surface-inset: rgba(8, 8, 8, 0.4);
+  --wg-line: var(--v2-alpha-light-8);
+  --wg-line-strong: var(--v2-alpha-light-16);
+  --wg-line-focus: var(--v2-alpha-light-20);
+  --wg-text: var(--v2-grey-100);
+  --wg-text-2: var(--v2-grey-500);
+  --wg-text-3: var(--v2-grey-600);
+  --wg-text-4: var(--v2-grey-700);
+  --wg-accent: var(--v2-grey-100);
+  --wg-on-accent: var(--v2-grey-1100);
+  --wg-selection: rgba(255, 255, 255, 0.14);
+
+  --bg-canvas: var(--v2-grey-1100);
+  --bg-panel: var(--v2-grey-1000);
+  --bg-elevated: var(--v2-grey-900);
+  --bg-hover: var(--v2-grey-800);
+  --bg-active: #444444;
+  --border-subtle: var(--v2-alpha-light-8);
+  --border-strong: var(--v2-alpha-light-20);
+  --border-focus: var(--v2-alpha-light-20);
+  --text-primary: var(--v2-grey-100);
+  --text-secondary: var(--v2-grey-500);
+  --text-muted: var(--v2-grey-600);
+  --text-inverse: var(--v2-grey-1100);
+  --accent-primary: var(--v2-grey-100);
+  --accent-inverse: var(--v2-grey-1100);
+  --diff-add-bg: rgba(107, 213, 134, 0.12);
+  --diff-del-bg: rgba(241, 116, 113, 0.12);
+}
+
+/* --------------------------------- light ---------------------------------- */
+
+:root[data-theme='light'],
+:root[data-theme='porcelain'] {
+  color-scheme: light;
+
+  --v2-background-bg-base: #faf6ec;
+  --v2-background-bg-deep: #f2ede1;
+  --v2-background-bg-layer-01: #efe7d7;
+  --v2-background-bg-contrast: #e7ddc9;
+  --v2-text-text-base: #242424;
+  --v2-text-text-muted: #5c5c5c;
+  --v2-text-text-faint: #808080;
+  --v2-text-text-inverse: #faf6ec;
+  --v2-border-border-muted: rgba(36, 30, 22, 0.08);
+  --v2-border-border-base: rgba(36, 30, 22, 0.12);
+  --v2-border-border-strong: rgba(36, 30, 22, 0.22);
+  --v2-overlay-hover: rgba(36, 30, 22, 0.05);
+  --v2-overlay-pressed: rgba(36, 30, 22, 0.08);
+
+  --wg-bg: #f2ede1;
+  --wg-panel: #faf6ec;
+  --wg-raised: #fffdf8;
+  --wg-float: #fffdf8;
+  --wg-surface-1: rgba(36, 30, 22, 0.04);
+  --wg-surface-2: rgba(36, 30, 22, 0.06);
+  --wg-surface-3: rgba(36, 30, 22, 0.09);
+  --wg-surface-inset: rgba(36, 30, 22, 0.05);
+  --wg-line: rgba(36, 30, 22, 0.1);
+  --wg-line-strong: rgba(36, 30, 22, 0.18);
+  --wg-line-focus: rgba(36, 30, 22, 0.4);
+  --wg-text: #242424;
+  --wg-text-2: #5c5c5c;
+  --wg-text-3: #808080;
+  --wg-text-4: #a39a8a;
+
+  --bg-canvas: #f2ede1;
+  --bg-panel: #faf6ec;
+  --bg-elevated: #fffdf8;
+  --bg-hover: #efe7d7;
+  --bg-active: #e7ddc9;
+  --border-subtle: rgba(36, 30, 22, 0.1);
+  --border-strong: rgba(36, 30, 22, 0.2);
+  --border-focus: rgba(36, 30, 22, 0.42);
+  --text-primary: #242424;
+  --text-secondary: #5c5c5c;
+  --text-muted: #808080;
+  --text-inverse: #faf6ec;
+  --accent-primary: #242424;
+  --accent-inverse: #faf6ec;
+  --diff-add-bg: rgba(46, 175, 90, 0.1);
+  --diff-del-bg: rgba(217, 46, 60, 0.1);
+}
+
+/* ---------------------------- settings geometry ---------------------------- */
+/* OpenCode centres a 1048px settings screen inside the window, with a 328px
+   sidebar and a 720px content column whose tab header starts 48px down. Rows
+   are borderless 32px lines. The 24px inset on the detail column and the
+   symmetric 12px inset on the index column come from settings.css; shell.css
+   zeroed both, which put the control column against the dialog edge and ran
+   the active nav row into the card border. */
+
+.modal-backdrop {
+  background: rgba(8, 8, 8, 0.6);
+}
+
+.wg-set {
+  width: min(var(--settings-width), calc(100vw - 32px));
+  height: min(880px, calc(100vh - 48px));
+  border: 1px solid var(--wg-line);
+  border-radius: 10px;
+  background: var(--v2-background-bg-base);
+  box-shadow: 0 12px 24px rgba(8, 8, 8, 0.35),
+    0 6px 12px rgba(8, 8, 8, 0.25);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: var(--settings-sidebar-width) minmax(0, 1fr);
+}
+
+.wg-set-panel {
+  flex: 1;
+  min-width: 0;
+  max-width: var(--settings-content-width);
+  padding-inline: 4px;
+}
+
+.wg-set-nav {
+  width: var(--settings-sidebar-width);
+  min-width: var(--settings-sidebar-width);
+  padding: 0 12px;
+}
+
+.wg-set-nav-head {
+  width: auto;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.wg-set-search {
+  width: auto;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.wg-set-nav-scroll {
+  width: auto;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wg-set-nav-foot {
+  width: auto;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding-right: 0;
+  padding-left: 8px;
+  border-top: 0;
+}
+
+.wg-set-head {
+  padding: 48px 24px 0;
+  border-bottom: 0;
+}
+
+.wg-set-head h2 {
+  margin: 0;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  letter-spacing: -0.01em;
+  color: var(--v2-text-text-base);
+}
+
+.wg-set-head-meta {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.wg-set-nav-title {
+  position: static;
+  transform: none;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  letter-spacing: -0.01em;
+}
+
+.wg-set-nav-head .wg-set-back {
+  position: relative;
+  top: auto;
+  left: auto;
+}
+
+.wg-set-scroll {
+  padding: 16px 24px 48px;
+  position: static;
+  overflow: visible;
+}
+
+.wg-set-nav-group {
+  margin: 0;
+  padding: 0 8px 4px;
+  color: var(--v2-text-text-faint);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wg-set-navbtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  text-align: left;
+}
+
+.wg-set-navbtn:hover {
+  background: var(--v2-overlay-hover);
+  color: var(--v2-text-text-base);
+}
+
+.wg-set-navbtn.is-active {
+  background: var(--v2-background-bg-layer-01);
+  color: var(--v2-text-text-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.wg-set-navcount {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.wg-set-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  margin: 0;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-base);
+  align-self: flex-start;
+}
+
+.wg-set-back:hover {
+  background: var(--v2-overlay-hover);
+  color: var(--v2-text-text-base);
+}
+
+/* The close control belongs to the screen, not to the nav column. */
+.wg-set-nav-head .icon-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--v2-text-text-muted);
+}
+
+.wg-set-nav-head .icon-btn:hover {
+  background: var(--v2-overlay-hover);
+  color: var(--v2-text-text-base);
+}
+
+.wg-set-section-intro {
+  margin: 10px 0 8px;
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-large);
+  color: var(--v2-text-text-muted);
+}
+
+.wg-set-group {
+  margin: 18px 0 0;
+  padding: 0 0 4px;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0;
+  color: var(--v2-text-text-faint);
+}
+
+/* settings row geometry, from [data-component="settings-row"] in settings.css */
+
+.wg-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  align-items: flex-start;
+  column-gap: 16px;
+  padding-block: 5.5px;
+  border-bottom: 0.5px solid var(--v2-border-border-base);
+  min-height: 32px;
+}
+
+.wg-row:last-child {
+  border-bottom: none;
+}
+
+.wg-row-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+}
+
+.wg-row-copy h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 530;
+  line-height: 17px;
+  letter-spacing: -0.04px;
+  color: var(--v2-text-text-base);
+}
+
+.wg-row-copy p {
+  margin-block: 0;
+  font-size: 13px;
+  font-weight: 440;
+  line-height: var(--line-height-compact, 17px);
+  color: var(--v2-text-text-muted);
+}
+
+.wg-row-control {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.wg-row-control > .input-flat {
+  width: auto;
+  max-width: 290px;
+}
+
+.wg-row-control > .segmented {
+  width: auto;
+  max-width: none;
+}
+
+.wg-row-control > .select-flat {
+  width: auto;
+  max-width: none;
+}
+
+@media (max-width: 639px) {
+  .wg-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .wg-row-control {
+    width: 100%;
+  }
+}
+
+.wg-row .input-flat,
+.wg-row .select-flat,
+.wg-set-scroll .input-flat:not(.catalog-search .input-flat) {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 6px;
+  background: var(--v2-background-bg-deep);
+  color: var(--v2-text-text-base);
+  font-size: var(--font-size-small);
+}
+
+.wg-row .segmented {
+  margin: 0;
+}
+
+.wg-row .select-flat {
+  padding-right: 28px;
+}
+
+/* Layer-03 is not defined by the token map, so this stays the browser's
+   initial background; the mapping only publishes layer-01 and layer-02. */
+.wg-row-control .segmented-btn {
+  font-size: var(--font-size-base);
+}
+
+.wg-row-control .segmented-btn.active {
+  background: var(--v2-background-bg-layer-03);
+  color: var(--v2-text-text-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.wg-row-control .segmented-btn:not(.active) {
+  background: transparent;
+  color: var(--v2-text-text-muted);
+}
+
+.wg-row-control > .toggle {
+  margin-block: 0;
+}
+
+.wg-row-control .toggle {
+  width: 40px;
+  height: 22px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--v2-background-bg-layer-02);
+  box-shadow: inset 0 1px 1px var(--v2-alpha-dark-8),
+    inset 0 0 0 0.5px var(--v2-alpha-dark-10);
+}
+
+.wg-row-control .toggle.on {
+  background: var(--v2-grey-100);
+}
+
+.wg-row-control .toggle-knob {
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: var(--v2-grey-100);
+}
+
+.wg-row-control .toggle.on .toggle-knob {
+  transform: translateX(18px);
+  background: var(--v2-grey-1100);
+}
+
+.wg-row .input-flat:focus,
+.wg-row .select-flat:focus {
+  border-color: var(--v2-border-border-strong);
+  outline: none;
+}
+
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 10px;
+  background: var(--v2-alpha-light-16);
+}
+
+.toggle.on {
+  border-color: transparent;
+  background: var(--v2-grey-100);
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--v2-grey-500);
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.toggle.on .toggle-knob {
+  transform: translateX(15px);
+  background: var(--v2-grey-1100);
+}
+
+.segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  margin: 0;
+  padding: 2px;
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 6px;
+  background: var(--v2-background-bg-deep);
+}
+
+.segmented-btn {
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 4px;
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.segmented-btn:hover {
+  background: var(--v2-overlay-hover);
+  color: var(--v2-text-text-base);
+}
+
+.segmented-btn.active {
+  background: var(--v2-background-bg-layer-01);
+  color: var(--v2-text-text-base);
+  font-weight: var(--font-weight-medium);
+}
+
+/* base type: OpenCode's theme.css sets --font-size-base: 14px */
+html,
+body {
+  font-size: 14px;
+}
+
+/* ------------------------------- chat metrics ------------------------------ */
+/* session-turn.css: 8px gaps, 20px thinking row, base 14px type, faint
+   reasoning label. */
+
+.chat-container {
+  gap: 0;
+  max-width: var(--settings-content-width);
+  padding: 24px 24px 40px;
+}
+
+.msg-block {
+  gap: 8px;
+  padding-block: 0;
+  border-bottom: 0;
+}
+
+.msg-meta {
+  gap: 8px;
+  min-height: 20px;
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.msg-meta-item {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.msg-text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-large);
+  color: var(--v2-text-text-base);
+}
+
+.msg-user .msg-text {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--v2-text-text-base);
+}
+
+.thinking-block {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.thinking-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  padding: 0;
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 20px;
+}
+
+.thinking-head:hover {
+  background: transparent;
+  color: var(--v2-text-text-muted);
+}
+
+.thinking-meta {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.thinking-body {
+  max-height: none;
+  padding: 8px 0 4px 20px;
+  border-top: 0;
+  border-left: 1px solid var(--v2-border-border-muted);
+  margin-left: 5px;
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-large);
+  font-style: normal;
+}
+
+.tool-stack {
+  gap: 0;
+}
+
+.tool-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.tool-card:hover {
+  background: var(--v2-overlay-hover);
+}
+
+.tool-card.tool-error,
+.tool-card.tool-denied {
+  border: 0;
+  background: transparent;
+}
+
+.tool-card-head {
+  gap: 8px;
+  min-height: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-base);
+  line-height: 20px;
+}
+
+.tool-card-head:hover {
+  background: transparent;
+}
+
+.tool-name {
+  color: var(--v2-text-text-base);
+  font-family: var(--wg-font);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.tool-summary {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.tool-card-meta {
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+.tool-card-body {
+  padding: 4px 0 12px 28px;
+  border-top: 0;
+}
+
+.tool-section-label {
+  margin: 8px 0 4px;
+  color: var(--v2-text-text-faint);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.msg-notice {
+  padding: 6px 0;
+  border: 0;
+  color: var(--v2-text-text-faint);
+  font-size: var(--font-size-small);
+}
+
+/* OpenCode's composer is a compact prompt field, not a tall text panel. */
+.composer-box textarea {
+  min-height: 48px;
+  max-height: 180px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.composer-toolbar {
+  padding-top: 4px;
+  padding-bottom: 5px;
+}
+
+/* ---------------------------------- diff ---------------------------------- */
+
+.diff-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--v2-border-border-muted);
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.diff-path {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--v2-text-text-muted);
+}
+
+.diff-plus {
+  color: #6bd586;
+}
+
+.diff-minus {
+  color: #f17471;
+  background: rgba(241, 116, 113, 0.12);
+}
+
+.diff-text {
+  color: var(--v2-text-text-base);
+}
+
+.diff-line {
+  display: flex;
+  gap: 8px;
+  padding: 0 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--wg-mono);
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+}
+
+.diff-add {
+  background: var(--diff-add-bg);
+  color: var(--v2-text-text-muted);
+}
+
+.diff-del {
+  background: var(--diff-del-bg);
+  color: var(--v2-text-text-muted);
+}
+
+.diff-add .diff-gutter,
+.diff-del .diff-gutter {
+  color: var(--v2-text-text-faint);
+}
+
+.diff-gutter {
+  flex: none;
+  width: 12px;
+  color: var(--v2-text-text-faint);
+  user-select: none;
+}
+
+.diff-block {
+  margin-top: 8px;
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 6px;
+  background: var(--v2-background-bg-deep);
+  overflow: hidden;
+}
+
+.diff-pre {
+  margin: 0;
+  font-family: var(--wg-mono);
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------- terminal -------------------------------- */
+
+.tool-pre {
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 6px;
+  background: var(--v2-background-bg-deep);
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+}
+
+.terminal-block {
+  margin-top: 8px;
+  border: 1px solid var(--v2-border-border-base);
+  border-radius: 6px;
+  background: var(--v2-background-bg-deep);
+  overflow: hidden;
+}
+
+.terminal-cmd {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--v2-border-border-muted);
+  color: var(--v2-text-text-muted);
+  font-size: var(--font-size-small);
+  font-family: var(--wg-mono);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.terminal-prompt {
+  color: var(--v2-text-text-faint);
+}
+
+.terminal-out {
+  margin: 0;
+  font-family: var(--wg-mono);
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------- composer ---------------------------------- */
+/* The composer's mode picker is a compact control, not a full-width field. */
+
+.composer-controls > .select-flat {
+  width: auto;
+  min-width: 88px;
+  height: 26px;
+  padding: 0 24px 0 8px;
+  border-radius: 6px;
+  background-position: calc(100% - 12px) 11px, calc(100% - 7px) 11px;
+  font-size: var(--font-size-small);
+}
+
+/* The role label is metadata, not a control: minimal.css dressed the user tag
+   as a filled pill, so "YOU" looked like a button while "WIGGLE" was plain. */
+.msg-role-tag,
+.msg-user .msg-role-tag {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0;
+  color: var(--v2-text-text-base);
+}

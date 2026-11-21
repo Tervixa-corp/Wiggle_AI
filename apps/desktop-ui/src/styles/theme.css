@@ -1,0 +1,531 @@
+/* Graphite and cream theme layer.
+ *
+ * Palette follows the warm gray ramps of the OpenCode theme package: graphite
+ * dark runs #131010 -> #f1ecec, cream light runs #faf6ec -> #26221d. Spacing is
+ * the same 4px scale, radii stay at 4/6/8px and type is 13/14/16px.
+ *
+ * Loaded after shell.css, so these values win over the original carbon theme.
+ */
+
+:root,
+:root[data-theme='dark'],
+:root[data-theme='graphite'] {
+  color-scheme: dark;
+
+  --wg-bg: #131010;
+  --wg-panel: #181515;
+  --wg-raised: #1e1a1a;
+  --wg-float: #241f1f;
+
+  --wg-surface-1: rgba(241, 236, 236, 0.038);
+  --wg-surface-2: rgba(241, 236, 236, 0.064);
+  --wg-surface-3: rgba(241, 236, 236, 0.1);
+  --wg-surface-inset: rgba(0, 0, 0, 0.32);
+
+  --wg-line: rgba(241, 236, 236, 0.075);
+  --wg-line-strong: rgba(241, 236, 236, 0.145);
+  --wg-line-focus: rgba(241, 236, 236, 0.3);
+
+  --wg-text: #f1ecec;
+  --wg-text-2: #b7b1b1;
+  --wg-text-3: #857f7f;
+  --wg-text-4: #5c5757;
+
+  --wg-accent: #f1ecec;
+  --wg-on-accent: #131010;
+  --wg-selection: rgba(241, 236, 236, 0.16);
+
+  --wg-add: rgba(150, 190, 145, 0.1);
+  --wg-add-line: rgba(150, 190, 145, 0.26);
+  --wg-del: rgba(214, 132, 122, 0.1);
+  --wg-del-line: rgba(214, 132, 122, 0.26);
+
+  --bg-canvas: #131010;
+  --bg-panel: #181515;
+  --bg-elevated: #1e1a1a;
+  --bg-hover: #262121;
+  --bg-active: #2d2727;
+  --border-subtle: rgba(241, 236, 236, 0.075);
+  --border-strong: rgba(241, 236, 236, 0.16);
+  --border-focus: rgba(241, 236, 236, 0.32);
+  --text-primary: #f1ecec;
+  --text-secondary: #b7b1b1;
+  --text-muted: #857f7f;
+  --text-inverse: #131010;
+  --accent-primary: #f1ecec;
+  --accent-inverse: #131010;
+  --diff-add-bg: rgba(150, 190, 145, 0.1);
+  --diff-del-bg: rgba(214, 132, 122, 0.1);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}
+
+:root[data-theme='obsidian'] {
+  color-scheme: dark;
+
+  --wg-bg: #0b0a0a;
+  --wg-panel: #0f0e0e;
+  --wg-raised: #141313;
+  --wg-float: #191717;
+  --wg-surface-1: rgba(245, 240, 240, 0.03);
+  --wg-surface-2: rgba(245, 240, 240, 0.055);
+  --wg-surface-3: rgba(245, 240, 240, 0.085);
+  --wg-line: rgba(245, 240, 240, 0.06);
+  --wg-line-strong: rgba(245, 240, 240, 0.13);
+  --wg-text: #f3eeee;
+  --wg-text-2: #ada7a7;
+  --wg-text-3: #7b7575;
+  --wg-text-4: #544f4f;
+
+  --bg-canvas: #0b0a0a;
+  --bg-panel: #0f0e0e;
+  --bg-elevated: #141313;
+  --bg-hover: #1b1919;
+  --bg-active: #221f1f;
+  --text-primary: #f3eeee;
+  --text-secondary: #ada7a7;
+  --text-muted: #7b7575;
+  --border-subtle: rgba(245, 240, 240, 0.065);
+  --border-strong: rgba(245, 240, 240, 0.14);
+}
+
+:root[data-theme='midnight'] {
+  color-scheme: dark;
+
+  --wg-bg: #0b0d12;
+  --wg-panel: #0f1218;
+  --wg-raised: #13171f;
+  --wg-float: #181d26;
+  --wg-surface-1: rgba(198, 214, 245, 0.035);
+  --wg-surface-2: rgba(198, 214, 245, 0.06);
+  --wg-surface-3: rgba(198, 214, 245, 0.09);
+  --wg-line: rgba(198, 214, 245, 0.08);
+  --wg-line-strong: rgba(198, 214, 245, 0.16);
+  --wg-text: #e8eef8;
+  --wg-text-2: #a9b5c7;
+  --wg-text-3: #7b8798;
+  --wg-text-4: #545f6e;
+
+  --bg-canvas: #0b0d12;
+  --bg-panel: #0f1218;
+  --bg-elevated: #13171f;
+  --bg-hover: #181d26;
+  --bg-active: #1d2430;
+  --text-primary: #e8eef8;
+  --text-secondary: #a9b5c7;
+  --text-muted: #7b8798;
+}
+
+:root[data-theme='light'],
+:root[data-theme='porcelain'] {
+  color-scheme: light;
+
+  /* Cream, not paper white: a warm, low-saturation surface for long sessions. */
+  --wg-bg: #faf6ec;
+  --wg-panel: #f4eee1;
+  --wg-raised: #fffdf8;
+  --wg-float: #fffdf8;
+
+  --wg-surface-1: rgba(60, 48, 32, 0.04);
+  --wg-surface-2: rgba(60, 48, 32, 0.065);
+  --wg-surface-3: rgba(60, 48, 32, 0.095);
+  --wg-surface-inset: rgba(60, 48, 32, 0.05);
+
+  --wg-line: rgba(60, 48, 32, 0.1);
+  --wg-line-strong: rgba(60, 48, 32, 0.18);
+  --wg-line-focus: rgba(60, 48, 32, 0.4);
+
+  --wg-text: #26221d;
+  --wg-text-2: #5a5348;
+  --wg-text-3: #857e71;
+  --wg-text-4: #a9a294;
+
+  --wg-accent: #26221d;
+  --wg-on-accent: #faf6ec;
+  --wg-selection: rgba(60, 48, 32, 0.13);
+
+  --wg-add: rgba(70, 130, 80, 0.08);
+  --wg-add-line: rgba(70, 130, 80, 0.24);
+  --wg-del: rgba(170, 70, 60, 0.08);
+  --wg-del-line: rgba(170, 70, 60, 0.24);
+
+  --bg-canvas: #faf6ec;
+  --bg-panel: #f4eee1;
+  --bg-elevated: #fffdf8;
+  --bg-hover: #efe7d7;
+  --bg-active: #e7ddc9;
+  --border-subtle: rgba(60, 48, 32, 0.1);
+  --border-strong: rgba(60, 48, 32, 0.2);
+  --border-focus: rgba(60, 48, 32, 0.42);
+  --text-primary: #26221d;
+  --text-secondary: #5a5348;
+  --text-muted: #857e71;
+  --text-inverse: #faf6ec;
+  --accent-primary: #26221d;
+  --accent-inverse: #faf6ec;
+  --diff-add-bg: rgba(70, 130, 80, 0.08);
+  --diff-del-bg: rgba(170, 70, 60, 0.08);
+}
+
+:root {
+  --wg-font-size: 14px;
+  --wg-font-small: 13px;
+  --wg-font-large: 16px;
+  --wg-space-1: 4px;
+  --wg-space-2: 8px;
+  --wg-space-3: 12px;
+  --wg-space-4: 16px;
+  --wg-space-5: 24px;
+  --wg-radius-sm: 4px;
+  --wg-radius-md: 6px;
+  --wg-radius-lg: 8px;
+}
+
+/* ----------------------------------- chat ---------------------------------- */
+
+.chat-scroll {
+  background: var(--wg-bg);
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 26px 24px 40px;
+}
+
+.msg-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.msg-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--wg-text-3);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.msg-role-tag {
+  font-weight: 600;
+  color: var(--wg-text-2);
+}
+
+.msg-meta-item {
+  color: var(--wg-text-3);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11.5px;
+}
+
+.msg-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--wg-text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.msg-user .msg-text {
+  padding: 10px 13px;
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-md);
+  background: var(--wg-surface-1);
+}
+
+.msg-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--wg-text-3);
+  font-size: 13px;
+}
+
+.code-block {
+  margin: 10px 0;
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-md);
+  background: var(--wg-surface-inset);
+  overflow: hidden;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 12px 13px;
+  overflow-x: auto;
+  font-family: var(--wg-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.code-lang {
+  display: block;
+  padding: 5px 12px;
+  border-bottom: 1px solid var(--wg-line);
+  color: var(--wg-text-3);
+  font-family: var(--wg-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------- thinking -------------------------------- */
+
+.thinking-block {
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-md);
+  background: var(--wg-surface-1);
+  overflow: hidden;
+}
+
+.thinking-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 7px 10px;
+  color: var(--wg-text-2);
+  font-size: 12px;
+  text-align: left;
+}
+
+.thinking-head:hover {
+  background: var(--wg-surface-2);
+}
+
+.thinking-icon {
+  color: var(--wg-text-3);
+}
+
+.thinking-meta {
+  margin-left: auto;
+  color: var(--wg-text-4);
+  font-size: 10.5px;
+}
+
+.thinking-body {
+  max-height: 320px;
+  overflow: auto;
+  padding: 4px 12px 12px;
+  border-top: 1px solid var(--wg-line);
+  color: var(--wg-text-2);
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  font-style: italic;
+}
+
+/* ----------------------------------- tools ---------------------------------- */
+
+.tool-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tool-card {
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-md);
+  background: var(--wg-surface-1);
+  overflow: hidden;
+}
+
+.tool-card.tool-error,
+.tool-card.tool-denied {
+  border-color: var(--wg-del-line);
+}
+
+.tool-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  color: var(--wg-text-2);
+  font-size: 12.5px;
+  text-align: left;
+}
+
+.tool-card-head:hover {
+  background: var(--wg-surface-2);
+}
+
+.tool-card-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tool-icon {
+  color: var(--wg-text-3);
+  flex: none;
+}
+
+.tool-name {
+  color: var(--wg-text);
+  font-family: var(--wg-mono);
+  font-size: 12px;
+}
+
+.tool-summary {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--wg-text-3);
+  font-size: 11.5px;
+}
+
+.tool-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--wg-text-4);
+  font-size: 11px;
+}
+
+.tool-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tool-status-ok {
+  color: var(--wg-text-3);
+}
+
+.tool-status-error,
+.tool-status-denied {
+  color: #d6847a;
+}
+
+.tool-card-body {
+  padding: 0 10px 10px;
+  border-top: 1px solid var(--wg-line);
+}
+
+.tool-section-label {
+  margin: 9px 0 5px;
+  color: var(--wg-text-4);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tool-pre {
+  margin: 0;
+  max-height: 300px;
+  overflow: auto;
+  padding: 9px 10px;
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-sm);
+  background: var(--wg-surface-inset);
+  color: var(--wg-text-2);
+  font-family: var(--wg-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* -------------------------------- diff / shell ------------------------------ */
+
+.diff-block {
+  margin-top: 9px;
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-sm);
+  overflow: hidden;
+  background: var(--wg-surface-inset);
+}
+
+.diff-head {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--wg-line);
+  color: var(--wg-text-3);
+  font-size: 11px;
+}
+
+.diff-pre {
+  margin: 0;
+  max-height: 340px;
+  overflow: auto;
+  font-family: var(--wg-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.diff-line {
+  display: flex;
+  gap: 8px;
+  padding: 0 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.diff-add {
+  background: var(--diff-add-bg);
+  color: var(--wg-text);
+}
+
+.diff-del {
+  background: var(--diff-del-bg);
+  color: var(--wg-text-2);
+}
+
+.diff-gutter {
+  flex: none;
+  width: 10px;
+  color: var(--wg-text-4);
+  user-select: none;
+}
+
+.terminal-block {
+  margin-top: 9px;
+  border: 1px solid var(--wg-line);
+  border-radius: var(--wg-radius-sm);
+  background: var(--wg-surface-inset);
+  overflow: hidden;
+}
+
+.terminal-cmd {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--wg-line);
+  color: var(--wg-text);
+  font-size: 11.5px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.terminal-prompt {
+  color: var(--wg-text-4);
+  margin-right: 4px;
+}
+
+.terminal-out {
+  margin: 0;
+  max-height: 300px;
+  overflow: auto;
+  padding: 9px 10px;
+  color: var(--wg-text-2);
+  font-size: 11.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.msg-notice {
+  padding: 6px 10px;
+  border-left: 2px solid var(--wg-line-strong);
+  color: var(--wg-text-3);
+  font-size: 12px;
+}

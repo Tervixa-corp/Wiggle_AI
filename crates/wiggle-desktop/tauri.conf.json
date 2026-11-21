@@ -1,29 +1,38 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Tervixa Wiggle",
+  "mainBinaryName": "Tervixa Wiggle",
   "version": "1.0.0",
   "identifier": "com.tervixa.wiggle",
   "build": {
-    "beforeBuildCommand": "npm run build",
     "frontendDist": "../../apps/desktop-ui/dist"
   },
   "app": {
     "windows": [
       {
         "title": "Tervixa Wiggle",
+        "url": "http://127.0.0.1:4317",
         "width": 1440,
         "height": 900,
         "minWidth": 900,
-        "minHeight": 640
+        "minHeight": 640,
+        "resizable": true,
+        "center": true
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data:; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-src http://127.0.0.1:* http://localhost:*"
+      "csp": null
     }
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["msi"],
+    "publisher": "Tervixa Corporation",
+    "copyright": "MIT License. Developed by Tervixa Corporation.",
+    "category": "DeveloperTool",
+    "shortDescription": "Tervixa Wiggle - AI Software Engineering Workbench",
+    "longDescription": "Local-first AI software engineering workbench by Tervixa Corporation. Ships its own Node runtime, the agent gateway, the workbench interface and the provider, plugin and connector catalogs.",
+    "resources": ["resources/**/*"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -31,8 +40,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "category": "DeveloperTool",
-    "shortDescription": "Tervixa Wiggle — Autonomous AI Software Engineering Workbench",
-    "longDescription": "Native cross-platform AI software engineering workbench and CLI by Tervixa Corporation featuring BYOK multi-provider routing, parallel swarm orchestration, MCP hub, SKILL.md registry, personal memory, and transactional undo/redo."
+    "windows": {
+      "wix": {
+        "language": "en-US"
+      }
+    }
   }
 }

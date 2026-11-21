@@ -1,10 +1,17 @@
 ---
 name: browser-qa
-description: Verify localhost web apps and UI flows using the built-in browser DOM inspector and console stream.
+description: Verify localhost web endpoints with the gateway's readable-text browser inspection, which reports HTTP status, the page title and visible text but no DOM tree or console capture.
 ---
 
-# Browser QA & DOM Verification
+# Browser QA
 
-1. Navigate to the target localhost preview URL and verify HTTP 200 status.
-2. Inspect the compact accessibility tree (`[ref=e1]`) for interactive controls and labels.
-3. Check console and network logs for uncaught exceptions, CSP violations, or failed API calls.
+The Browser pane can fetch an HTTP(S) URL and show its status, title and readable text. It does not render
+the page, expose a DOM/accessibility tree, or stream console output. Do not claim to have inspected any of
+those.
+
+1. Use the Browser pane (or `curl -I` through `run_command` with the user's approval) to confirm the URL
+   answers with the expected status.
+2. Read the extracted text to check the page's visible copy and headings.
+3. For UI logic, read the source files with `read_file`/`grep` and run the project's own tests. Those are the
+   only reliable checks available here.
+4. Report exactly which checks ran and which did not.

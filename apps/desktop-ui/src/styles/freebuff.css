@@ -1,0 +1,1605 @@
+/* Modern interface — the Freebuff Desktop look.
+ *
+ * Loaded last, so it wins over minimal.css, shell.css, theme.css and
+ * opencode.css. Everything is scoped to :root[data-ui='modern'], which
+ * useWiggleStore sets from settings.uiTheme; Classic never reads this file.
+ *
+ * Colour values are Freebuff Desktop's own tokens (:root and
+ * :root[data-theme=light] in its renderer stylesheet): #0a0a0a canvas,
+ * #171717 surface, #6da34d brand, 720px transcript, 8px shell inset, 52px
+ * rail, 44px tab row and the 24px workspace corner with its 5px ledge.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Tokens                                                                      */
+/* -------------------------------------------------------------------------- */
+
+:root[data-ui='modern'] {
+  color-scheme: dark;
+
+  --fb-bg: #0a0a0a;
+  --fb-shell: #060606;
+  --fb-chrome: #0f0f0f;
+  --fb-surface: #171717;
+  --fb-surface-2: #1c1c1c;
+  --fb-raised: #212121;
+  --fb-border: #262626;
+  --fb-text: #ebebeb;
+  --fb-muted: #9e9e9e;
+  --fb-faint: #7a7a7a;
+  --fb-brand: #6da34d;
+  --fb-brand-dim: #578c32;
+  --fb-brand-soft: #3f6c11;
+  --fb-brand-ink: #ffffff;
+  --fb-danger: #cf2f2f;
+  --fb-warn: #f59e0b;
+  --fb-info: #c1f5f4;
+  --fb-premium: #d8a14a;
+  --fb-ledge: color-mix(in srgb, var(--fb-text) 13%, var(--fb-bg));
+  --fb-selected: color-mix(in srgb, var(--fb-text) 12%, var(--fb-surface));
+  --fb-track: color-mix(in srgb, var(--fb-text) 14%, var(--fb-surface));
+
+  --fb-rail: 52px;
+  --fb-inset: 8px;
+  --fb-tabbar: 44px;
+  --fb-corner: 24px;
+  --fb-radius: 8px;
+  --fb-radius-lg: 12px;
+  --fb-sans: 'Google Sans Flex', 'Google Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial,
+    sans-serif;
+  --fb-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Bridge onto the tokens the existing components already read. Custom
+   * properties resolve at use time, so the palette blocks below can change
+   * --fb-* without touching these. */
+  --wg-bg: var(--fb-bg);
+  --wg-panel: var(--fb-chrome);
+  --wg-raised: var(--fb-raised);
+  --wg-float: var(--fb-raised);
+  --wg-surface-1: color-mix(in srgb, var(--fb-text) 4%, transparent);
+  --wg-surface-2: color-mix(in srgb, var(--fb-text) 7%, transparent);
+  --wg-surface-3: color-mix(in srgb, var(--fb-text) 10%, transparent);
+  --wg-surface-inset: color-mix(in srgb, var(--fb-bg) 60%, transparent);
+  --wg-line: color-mix(in srgb, var(--fb-text) 9%, transparent);
+  --wg-line-strong: color-mix(in srgb, var(--fb-text) 16%, transparent);
+  --wg-line-focus: color-mix(in srgb, var(--fb-text) 32%, transparent);
+  --wg-text: var(--fb-text);
+  --wg-text-2: var(--fb-muted);
+  --wg-text-3: var(--fb-faint);
+  --wg-text-4: color-mix(in srgb, var(--fb-faint) 70%, transparent);
+  --wg-accent: var(--fb-brand);
+  --wg-on-accent: var(--fb-brand-ink);
+  --wg-selection: color-mix(in srgb, var(--fb-brand) 22%, transparent);
+  --wg-add: color-mix(in srgb, var(--fb-brand) 14%, transparent);
+  --wg-add-line: color-mix(in srgb, var(--fb-brand) 38%, transparent);
+  --wg-del: color-mix(in srgb, var(--fb-danger) 16%, transparent);
+  --wg-del-line: color-mix(in srgb, var(--fb-danger) 40%, transparent);
+  --wg-radius-sm: var(--fb-radius);
+  --wg-radius-md: var(--fb-radius-lg);
+  --wg-code-font: var(--fb-mono);
+  --wg-titlebar-h: var(--fb-tabbar);
+
+  --bg-canvas: var(--fb-bg);
+  --bg-panel: var(--fb-chrome);
+  --bg-elevated: var(--fb-surface);
+  --bg-hover: var(--fb-raised);
+  --bg-active: var(--fb-surface-2);
+  --border-subtle: var(--fb-border);
+  --border-strong: color-mix(in srgb, var(--fb-text) 18%, transparent);
+  --border-focus: color-mix(in srgb, var(--fb-brand) 55%, transparent);
+  --text-primary: var(--fb-text);
+  --text-secondary: var(--fb-muted);
+  --text-muted: var(--fb-faint);
+  --text-inverse: var(--fb-bg);
+  --accent-primary: var(--fb-brand);
+  --accent-inverse: var(--fb-brand-ink);
+  --diff-add-bg: var(--wg-add);
+  --diff-del-bg: var(--wg-del);
+  --font-sans: var(--fb-sans);
+  --font-mono: var(--fb-mono);
+}
+
+/* Light — Freebuff's own light palette. */
+:root[data-ui='modern'][data-theme='light'],
+:root[data-ui='modern'][data-theme='porcelain'] {
+  color-scheme: light;
+  --fb-bg: #f5f5f7;
+  --fb-shell: #ececef;
+  --fb-chrome: #ebebee;
+  --fb-surface: #ffffff;
+  --fb-surface-2: #ffffff;
+  --fb-raised: #ffffff;
+  --fb-border: #e3e3e8;
+  --fb-text: #1a1a1d;
+  --fb-muted: #5c5c66;
+  --fb-faint: #8a8a94;
+  --fb-brand: #6da34d;
+  --fb-brand-dim: #507e35;
+  --fb-brand-ink: #ffffff;
+  --fb-danger: #cf4646;
+  --fb-warn: #d98b0a;
+  --fb-info: #2b8fa6;
+  --fb-premium: #9c6d1e;
+  --fb-ledge: color-mix(in srgb, var(--fb-text) 9%, var(--fb-bg));
+  --fb-selected: color-mix(in srgb, var(--fb-text) 9%, var(--fb-surface));
+  --fb-track: color-mix(in srgb, var(--fb-text) 16%, var(--fb-surface));
+}
+
+/* -------------------------------------------------------------------------- */
+/* Premium palettes                                                            */
+/* -------------------------------------------------------------------------- */
+
+:root[data-ui='modern'][data-palette='nord'] {
+  --fb-bg: #2e3440;
+  --fb-shell: #262b35;
+  --fb-chrome: #272c36;
+  --fb-surface: #3b4252;
+  --fb-surface-2: #434c5e;
+  --fb-raised: #4c566a;
+  --fb-border: #3b4252;
+  --fb-text: #eceff4;
+  --fb-muted: #d8dee9;
+  --fb-faint: #aebacf;
+  --fb-brand: #88c0d0;
+  --fb-brand-dim: #5e81ac;
+  --fb-brand-ink: #1b1f27;
+}
+
+:root[data-ui='modern'][data-palette='dracula'] {
+  --fb-bg: #282a36;
+  --fb-shell: #1e1f29;
+  --fb-chrome: #21222c;
+  --fb-surface: #2d2f3d;
+  --fb-surface-2: #343746;
+  --fb-raised: #424450;
+  --fb-border: #3c3f51;
+  --fb-text: #f8f8f2;
+  --fb-muted: #c0c6d4;
+  --fb-faint: #9aa0b0;
+  --fb-brand: #bd93f9;
+  --fb-brand-dim: #8f6fd0;
+}
+
+:root[data-ui='modern'][data-palette='tokyo-night'] {
+  --fb-bg: #1a1b26;
+  --fb-shell: #13141c;
+  --fb-chrome: #16161e;
+  --fb-surface: #1f2335;
+  --fb-surface-2: #24283b;
+  --fb-raised: #2f3549;
+  --fb-border: #2a2e42;
+  --fb-text: #c0caf5;
+  --fb-muted: #a9b1d6;
+  --fb-faint: #7a83a3;
+  --fb-brand: #7aa2f7;
+  --fb-brand-dim: #5a7fd6;
+}
+
+:root[data-ui='modern'][data-palette='gruvbox'] {
+  --fb-bg: #282828;
+  --fb-shell: #1b1b1b;
+  --fb-chrome: #1d2021;
+  --fb-surface: #32302f;
+  --fb-surface-2: #3c3836;
+  --fb-raised: #504945;
+  --fb-border: #403c39;
+  --fb-text: #ebdbb2;
+  --fb-muted: #d5c4a1;
+  --fb-faint: #bdae93;
+  --fb-brand: #d79921;
+  --fb-brand-dim: #b07d0a;
+}
+
+:root[data-ui='modern'][data-palette='one-dark'] {
+  --fb-bg: #282c34;
+  --fb-shell: #1e2127;
+  --fb-chrome: #21252b;
+  --fb-surface: #2f343d;
+  --fb-surface-2: #353b45;
+  --fb-raised: #3e4451;
+  --fb-border: #333842;
+  --fb-text: #abb2bf;
+  --fb-muted: #9aa3b0;
+  --fb-faint: #7f8794;
+  --fb-brand: #61afef;
+  --fb-brand-dim: #4a8fd0;
+  --fb-brand-ink: #10141a;
+}
+
+:root[data-ui='modern'][data-palette='catppuccin'] {
+  --fb-bg: #1e1e2e;
+  --fb-shell: #15151f;
+  --fb-chrome: #181825;
+  --fb-surface: #24273a;
+  --fb-surface-2: #313244;
+  --fb-raised: #45475a;
+  --fb-border: #2c2f42;
+  --fb-text: #cdd6f4;
+  --fb-muted: #bac2de;
+  --fb-faint: #a6adc8;
+  --fb-brand: #cba6f7;
+  --fb-brand-dim: #a07fd0;
+}
+
+:root[data-ui='modern'][data-palette='catppuccin-latte'] {
+  color-scheme: light;
+  --fb-bg: #eff1f5;
+  --fb-shell: #e6e9ef;
+  --fb-chrome: #e6e9ef;
+  --fb-surface: #ffffff;
+  --fb-surface-2: #ffffff;
+  --fb-raised: #dce0e8;
+  --fb-border: #ccd0da;
+  --fb-text: #4c4f69;
+  --fb-muted: #5c5f77;
+  --fb-faint: #8c8fa1;
+  --fb-brand: #8839ef;
+  --fb-brand-dim: #7029c7;
+}
+
+:root[data-ui='modern'][data-palette='rose-pine'] {
+  --fb-bg: #191724;
+  --fb-shell: #13111c;
+  --fb-chrome: #16141f;
+  --fb-surface: #1f1d2e;
+  --fb-surface-2: #26233a;
+  --fb-raised: #2a2740;
+  --fb-border: #26233a;
+  --fb-text: #e0def4;
+  --fb-muted: #c8c5df;
+  --fb-faint: #908caa;
+  --fb-brand: #ebbcba;
+  --fb-brand-dim: #c69f9d;
+  --fb-brand-ink: #191724;
+}
+
+:root[data-ui='modern'][data-palette='solarized-light'] {
+  color-scheme: light;
+  --fb-bg: #fdf6e3;
+  --fb-shell: #f3ecd9;
+  --fb-chrome: #eee8d5;
+  --fb-surface: #fffbf0;
+  --fb-surface-2: #fffbf0;
+  --fb-raised: #e6dfc9;
+  --fb-border: #ddd6c1;
+  --fb-text: #586e75;
+  --fb-muted: #657b83;
+  --fb-faint: #93a1a1;
+  --fb-brand: #268bd2;
+  --fb-brand-dim: #1f6fa8;
+}
+
+:root[data-ui='modern'][data-palette='cyberpunk'] {
+  --fb-bg: #0d0221;
+  --fb-shell: #080115;
+  --fb-chrome: #090118;
+  --fb-surface: #150733;
+  --fb-surface-2: #1b0a42;
+  --fb-raised: #241153;
+  --fb-border: #2c1a5e;
+  --fb-text: #e6f7ff;
+  --fb-muted: #a8c6e0;
+  --fb-faint: #7c93ad;
+  --fb-brand: #ff2a6d;
+  --fb-brand-dim: #d1144f;
+  --fb-premium: #00fff9;
+}
+
+:root[data-ui='modern'][data-palette='matrix'] {
+  --fb-bg: #0a0e0a;
+  --fb-shell: #050805;
+  --fb-chrome: #060906;
+  --fb-surface: #0f150f;
+  --fb-surface-2: #131c13;
+  --fb-raised: #182418;
+  --fb-border: #1d2b1d;
+  --fb-text: #d7ffd7;
+  --fb-muted: #8fbf8f;
+  --fb-faint: #5f8f5f;
+  --fb-brand: #00ff41;
+  --fb-brand-dim: #00b32e;
+  --fb-brand-ink: #041206;
+}
+
+:root[data-ui='modern'][data-palette='amber-crt'] {
+  --fb-bg: #1a1200;
+  --fb-shell: #120c00;
+  --fb-chrome: #140e00;
+  --fb-surface: #201703;
+  --fb-surface-2: #281d05;
+  --fb-raised: #322509;
+  --fb-border: #3a2b0b;
+  --fb-text: #ffd27a;
+  --fb-muted: #d9a94f;
+  --fb-faint: #a37f38;
+  --fb-brand: #ffb000;
+  --fb-brand-dim: #cc8c00;
+  --fb-brand-ink: #1a1200;
+}
+
+:root[data-ui='modern'][data-palette='vaporwave'] {
+  --fb-bg: #2b0f3a;
+  --fb-shell: #200b2b;
+  --fb-chrome: #220b2e;
+  --fb-surface: #341245;
+  --fb-surface-2: #3d1650;
+  --fb-raised: #4a1b61;
+  --fb-border: #4e1f66;
+  --fb-text: #f8e8ff;
+  --fb-muted: #d9b8ea;
+  --fb-faint: #a984bd;
+  --fb-brand: #ff71ce;
+  --fb-brand-dim: #d94fa9;
+  --fb-premium: #01cdfe;
+}
+
+:root[data-ui='modern'][data-palette='midnight-blue'] {
+  --fb-bg: #0f1626;
+  --fb-shell: #0a101c;
+  --fb-chrome: #0b1120;
+  --fb-surface: #141d31;
+  --fb-surface-2: #18233b;
+  --fb-raised: #1e2b48;
+  --fb-border: #22304f;
+  --fb-text: #e2e8f4;
+  --fb-muted: #aebacf;
+  --fb-faint: #7d8aa3;
+  --fb-brand: #5b8cff;
+  --fb-brand-dim: #3f6fe0;
+}
+
+:root[data-ui='modern'][data-palette='high-contrast'] {
+  --fb-bg: #000000;
+  --fb-shell: #000000;
+  --fb-chrome: #000000;
+  --fb-surface: #0a0a0a;
+  --fb-surface-2: #111111;
+  --fb-raised: #171717;
+  --fb-border: #4d4d4d;
+  --fb-text: #ffffff;
+  --fb-muted: #e0e0e0;
+  --fb-faint: #b8b8b8;
+  --fb-brand: #ffff00;
+  --fb-brand-dim: #ffff00;
+  --fb-brand-ink: #000000;
+}
+
+/* opencode's v2 layer is another hard-coded palette; point every token of it
+ * at the modern one so rules written against it cannot reintroduce the
+ * graphite/cream colours (this is what kept light-mode inputs cream). */
+:root[data-ui='modern'] {
+  --v2-grey-50: var(--fb-surface);
+  --v2-grey-100: var(--fb-text);
+  --v2-grey-200: color-mix(in srgb, var(--fb-text) 92%, var(--fb-bg));
+  --v2-grey-300: color-mix(in srgb, var(--fb-text) 84%, var(--fb-bg));
+  --v2-grey-400: color-mix(in srgb, var(--fb-text) 62%, var(--fb-bg));
+  --v2-grey-500: var(--fb-muted);
+  --v2-grey-600: var(--fb-faint);
+  --v2-grey-700: color-mix(in srgb, var(--fb-faint) 80%, var(--fb-bg));
+  --v2-grey-800: var(--fb-surface);
+  --v2-grey-900: var(--fb-surface-2);
+  --v2-grey-1000: var(--fb-bg);
+  --v2-grey-1100: var(--fb-bg);
+  --v2-grey-1200: var(--fb-shell);
+  --v2-alpha-dark-4: color-mix(in srgb, #000000 4%, transparent);
+  --v2-alpha-dark-8: color-mix(in srgb, #000000 8%, transparent);
+  --v2-alpha-dark-10: color-mix(in srgb, #000000 10%, transparent);
+  --v2-alpha-dark-12: color-mix(in srgb, #000000 12%, transparent);
+  --v2-alpha-dark-24: color-mix(in srgb, #000000 24%, transparent);
+  --v2-alpha-dark-40: color-mix(in srgb, #000000 40%, transparent);
+  --v2-alpha-dark-60: color-mix(in srgb, #000000 60%, transparent);
+  --v2-alpha-light-4: color-mix(in srgb, var(--fb-text) 4%, transparent);
+  --v2-alpha-light-6: color-mix(in srgb, var(--fb-text) 6%, transparent);
+  --v2-alpha-light-8: color-mix(in srgb, var(--fb-text) 8%, transparent);
+  --v2-alpha-light-10: color-mix(in srgb, var(--fb-text) 10%, transparent);
+  --v2-alpha-light-16: color-mix(in srgb, var(--fb-text) 16%, transparent);
+  --v2-alpha-light-20: color-mix(in srgb, var(--fb-text) 20%, transparent);
+  --v2-alpha-light-24: color-mix(in srgb, var(--fb-text) 24%, transparent);
+  --v2-alpha-light-40: color-mix(in srgb, var(--fb-text) 40%, transparent);
+  --v2-alpha-light-60: color-mix(in srgb, var(--fb-text) 60%, transparent);
+  --v2-alpha-light-80: color-mix(in srgb, var(--fb-text) 80%, transparent);
+  --v2-background-bg-base: var(--fb-bg);
+  --v2-background-bg-deep: var(--fb-surface-2);
+  --v2-background-bg-layer-01: var(--fb-surface);
+  --v2-background-bg-layer-02: var(--fb-raised);
+  --v2-background-bg-layer-03: var(--fb-raised);
+  --v2-background-bg-contrast: var(--fb-border);
+  --v2-text-text-base: var(--fb-text);
+  --v2-text-text-muted: var(--fb-muted);
+  --v2-text-text-faint: var(--fb-faint);
+  --v2-text-text-inverse: var(--fb-bg);
+  --v2-border-border-muted: var(--fb-border);
+  --v2-border-border-base: var(--fb-border);
+  --v2-border-border-strong: color-mix(in srgb, var(--fb-text) 22%, var(--fb-border));
+  --v2-overlay-hover: color-mix(in srgb, var(--fb-text) 6%, transparent);
+  --v2-overlay-pressed: color-mix(in srgb, var(--fb-text) 10%, transparent);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Shell                                                                       */
+/* -------------------------------------------------------------------------- */
+
+:root[data-ui='modern'] body,
+:root[data-ui='modern'] #root {
+  background: var(--fb-shell);
+}
+
+:root[data-ui='modern'] .wg-app {
+  background: var(--fb-shell);
+  color: var(--fb-text);
+  font-family: var(--fb-sans);
+}
+
+/* Tab row replaces the classic titlebar: 44px of chrome, 8px inset. */
+:root[data-ui='modern'] .wg-titlebar {
+  height: var(--fb-tabbar);
+  padding: 0 10px;
+  gap: 10px;
+  background: var(--fb-chrome);
+  border-bottom: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--fb-brand);
+  color: var(--fb-brand-ink);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+:root[data-ui='modern'] .wg-wordmark {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-titlebar-sep {
+  height: 14px;
+  background: var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-chip {
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--fb-border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fb-muted);
+  font-size: 11px;
+}
+
+:root[data-ui='modern'] .wg-chip:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-chip.is-static {
+  border-color: transparent;
+  background: transparent;
+}
+
+:root[data-ui='modern'] .wg-tb-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-tb-btn:hover,
+:root[data-ui='modern'] .wg-tb-btn.is-on {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-winbtn {
+  width: 32px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .wg-winbtn:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-winbtn.is-close:hover {
+  background: #c42b1c;
+  color: #ffffff;
+}
+
+/* Workspace frame: rail outside, one rounded card with a 5px ledge. */
+:root[data-ui='modern'] .wg-body {
+  position: relative;
+  margin: 0 var(--fb-inset) var(--fb-inset) var(--fb-rail);
+  border-radius: var(--fb-corner);
+  background: var(--fb-bg);
+  box-shadow: 0 5px 0 var(--fb-ledge);
+  isolation: isolate;
+}
+
+/* The rail sits outside the frame, so the frame cannot clip its own box;
+ * the panes carry the corner radii instead. */
+:root[data-ui='modern'] .wg-sidebar {
+  border-radius: var(--fb-corner) 0 0 var(--fb-corner);
+}
+
+:root[data-ui='modern'] .wg-aux {
+  border-radius: 0 var(--fb-corner) var(--fb-corner) 0;
+}
+
+/* With a pane collapsed the centre becomes the frame's own edge. */
+:root[data-ui='modern'] .wg-body:not(:has(.wg-sidebar)) .wg-center {
+  border-top-left-radius: var(--fb-corner);
+  border-bottom-left-radius: var(--fb-corner);
+}
+
+:root[data-ui='modern'] .wg-body:not(:has(.wg-aux)) .wg-center {
+  border-top-right-radius: var(--fb-corner);
+  border-bottom-right-radius: var(--fb-corner);
+}
+
+:root[data-ui='modern'] .wg-rail {
+  position: absolute;
+  left: calc(-1 * var(--fb-rail));
+  top: 0;
+  bottom: 0;
+  width: var(--fb-rail);
+  padding: 10px 0;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  z-index: 2;
+}
+
+:root[data-ui='modern'] .wg-rail-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-rail-btn:hover {
+  background: color-mix(in srgb, var(--fb-text) 9%, transparent);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-rail-btn.is-active {
+  background: color-mix(in srgb, var(--fb-text) 9%, transparent);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-rail-btn.is-active::before {
+  display: none;
+}
+
+/* Sidebar ------------------------------------------------------------------ */
+
+:root[data-ui='modern'] .wg-sidebar {
+  background: var(--fb-chrome);
+  border-right: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-sidebar-head {
+  height: 44px;
+  padding: 0 10px 0 12px;
+  gap: 6px;
+}
+
+:root[data-ui='modern'] .wg-sidebar-title {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-sidebar-action {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-sidebar-action:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-search-wrap {
+  margin: 0 8px 6px;
+  height: 30px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface-2);
+}
+
+:root[data-ui='modern'] .wg-search {
+  font-size: 12px;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-sidebar-scroll {
+  padding: 0 8px 12px;
+}
+
+:root[data-ui='modern'] .wg-group-head {
+  height: 28px;
+  padding: 0 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .wg-item {
+  height: 32px;
+  padding: 0 8px;
+  border-radius: var(--fb-radius);
+  color: var(--fb-muted);
+  font-size: 13px;
+}
+
+:root[data-ui='modern'] .wg-item-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:root[data-ui='modern'] .wg-item:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-item.is-active {
+  background: var(--fb-selected);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-tree-row {
+  height: 28px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-tree-row:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-tree-row.is-active {
+  background: var(--fb-surface-2);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-empty {
+  color: var(--fb-faint);
+  font-size: 12px;
+}
+
+/* Centre ------------------------------------------------------------------- */
+
+:root[data-ui='modern'] .wg-center {
+  background: var(--fb-bg);
+}
+
+:root[data-ui='modern'] .wg-tabstrip {
+  height: 36px;
+  gap: 0;
+  padding: 0 6px;
+  background: var(--fb-chrome);
+  border-bottom: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-tab {
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 7px;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .wg-tab:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-tab.is-active {
+  background: var(--fb-selected);
+  color: var(--fb-text);
+}
+
+/* Chat --------------------------------------------------------------------- */
+
+:root[data-ui='modern'] .chat-container {
+  max-width: 720px;
+  padding: 24px 24px 32px;
+}
+
+:root[data-ui='modern'] .msg-block {
+  gap: 10px;
+  padding-block: 10px;
+}
+
+:root[data-ui='modern'] .msg-meta {
+  gap: 8px;
+  font-size: 11px;
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .msg-role-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .msg-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .msg-block.msg-user .msg-text {
+  align-self: flex-end;
+  max-width: 84%;
+  padding: 10px 14px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface-2);
+}
+
+:root[data-ui='modern'] .msg-notice {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface);
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+/* Thinking + tools read as flat rows on the canvas, as in Freebuff. */
+:root[data-ui='modern'] .thinking-head {
+  height: 28px;
+  color: var(--fb-muted);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .thinking-body {
+  margin: 2px 0 6px;
+  padding: 8px 0 4px 14px;
+  border: 0;
+  border-left: 1px solid var(--fb-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fb-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+:root[data-ui='modern'] .tool-card {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .tool-card-head {
+  height: 32px;
+  padding: 0 10px;
+  color: var(--fb-text);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .tool-card-head:hover {
+  background: var(--fb-raised);
+}
+
+:root[data-ui='modern'] .tool-card-body,
+:root[data-ui='modern'] .tool-pre,
+:root[data-ui='modern'] .diff-block,
+:root[data-ui='modern'] .terminal-block {
+  border-top: 1px solid var(--fb-border);
+  background: var(--fb-bg);
+  border-radius: 0 0 var(--fb-radius) var(--fb-radius);
+}
+
+:root[data-ui='modern'] .tool-pre,
+:root[data-ui='modern'] .diff-pre,
+:root[data-ui='modern'] .terminal-out {
+  font-family: var(--fb-mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+:root[data-ui='modern'] .diff-head,
+:root[data-ui='modern'] .terminal-cmd {
+  background: var(--fb-chrome);
+  border-bottom: 1px solid var(--fb-border);
+  color: var(--fb-muted);
+  font-size: 11.5px;
+}
+
+/* Empty state — Freebuff's new-thread screen. */
+:root[data-ui='modern'] .empty-state {
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .empty-eyebrow {
+  color: var(--fb-faint);
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+:root[data-ui='modern'] .empty-state h1 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .empty-lede {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .empty-stats,
+:root[data-ui='modern'] .empty-warning {
+  color: var(--fb-muted);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .quick-prompt-card {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+  color: var(--fb-muted);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .quick-prompt-card:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+/* Composer — the Freebuff input box. */
+:root[data-ui='modern'] .composer-box {
+  border: 1px solid color-mix(in srgb, var(--fb-faint) 18%, var(--fb-border));
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface-2);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 3%, transparent);
+}
+
+:root[data-ui='modern'] .composer-box:focus-within {
+  border-color: color-mix(in srgb, var(--fb-faint) 30%, var(--fb-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--fb-text) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 3%, transparent);
+}
+
+:root[data-ui='modern'] .composer-box textarea {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .composer-box textarea::placeholder {
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .composer-inner {
+  padding: 6px 8px 6px;
+}
+
+:root[data-ui='modern'] .composer-toolbar,
+:root[data-ui='modern'] .composer-controls {
+  gap: 6px;
+}
+
+:root[data-ui='modern'] .composer-controls > .select-flat {
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--fb-border);
+  background: transparent;
+  color: var(--fb-muted);
+  font-size: 11.5px;
+}
+
+:root[data-ui='modern'] .composer-controls > .select-flat:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .btn-primary {
+  border-radius: var(--fb-radius);
+  background: var(--fb-brand-dim);
+  color: var(--fb-brand-ink);
+  font-weight: 500;
+}
+
+:root[data-ui='modern'] .btn-primary:hover {
+  background: var(--fb-brand);
+}
+
+:root[data-ui='modern'] .btn-send {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: var(--fb-radius);
+}
+
+:root[data-ui='modern'] .btn-stop {
+  background: var(--fb-danger);
+  color: #ffffff;
+}
+
+:root[data-ui='modern'] .btn-flat {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 7px;
+  border: 1px solid var(--fb-border);
+  background: transparent;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .btn-flat:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .context-strip,
+:root[data-ui='modern'] .context-pill {
+  color: var(--fb-faint);
+  font-size: 11.5px;
+}
+
+:root[data-ui='modern'] .model-chip {
+  height: 22px;
+  padding: 0 7px;
+  border: 1px solid var(--fb-border);
+  border-radius: 6px;
+  color: var(--fb-muted);
+  font-size: 11px;
+}
+
+:root[data-ui='modern'] .approval-bar {
+  border: 1px solid color-mix(in srgb, var(--fb-warn) 36%, var(--fb-border));
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .approval-title {
+  font-size: 13px;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .approval-copy {
+  font-size: 12.5px;
+  color: var(--fb-muted);
+}
+
+/* Right panel -------------------------------------------------------------- */
+
+:root[data-ui='modern'] .wg-aux {
+  background: var(--fb-surface);
+  border-left: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-aux-head {
+  height: 40px;
+  padding: 0 8px;
+  gap: 4px;
+  border-bottom: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-aux-tab {
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 7px;
+  color: var(--fb-muted);
+  font-size: 11.5px;
+}
+
+:root[data-ui='modern'] .wg-aux-tab:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-aux-tab.is-active {
+  background: var(--fb-selected);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .telemetry-title {
+  color: var(--fb-faint);
+  font-size: 10.5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+:root[data-ui='modern'] .kv-row {
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .kv-row strong {
+  color: var(--fb-text);
+  font-weight: 500;
+}
+
+:root[data-ui='modern'] .wg-resize {
+  width: 1px;
+  background: var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-resize:hover,
+:root[data-ui='modern'] .wg-resize.is-dragging {
+  background: var(--fb-brand);
+}
+
+/* Status bar — a thin chrome strip, not a bordered footer. */
+:root[data-ui='modern'] .wg-status {
+  height: 22px;
+  padding: 0 10px;
+  background: var(--fb-shell);
+  border-top: 0;
+  color: var(--fb-faint);
+  font-size: 10.5px;
+}
+
+:root[data-ui='modern'] .wg-status-item {
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .wg-status-item.is-strong {
+  color: var(--fb-muted);
+}
+
+/* Settings — Freebuff's full-window page: 256px nav, 42px header. */
+:root[data-ui='modern'] .modal-backdrop {
+  padding: 0;
+  background: var(--fb-bg);
+  backdrop-filter: none;
+}
+
+:root[data-ui='modern'] .wg-set {
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  background: var(--fb-bg);
+  box-shadow: none;
+}
+
+:root[data-ui='modern'] .wg-set-nav {
+  grid-column: 1;
+  grid-row: 1;
+  width: 256px;
+  min-width: 256px;
+  padding: 8px 12px;
+  gap: 2px;
+  border-right: 1px solid var(--fb-border);
+  background: var(--fb-bg);
+}
+
+:root[data-ui='modern'] .wg-set-nav-head {
+  height: 42px;
+  padding: 0 4px 0 0;
+}
+
+:root[data-ui='modern'] .wg-set-back {
+  height: 26px;
+  padding: 0 8px 0 6px;
+  border-radius: 7px;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .wg-set-back:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set-nav-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set-search {
+  padding: 0 0 8px;
+}
+
+:root[data-ui='modern'] .wg-set-search .catalog-search {
+  height: 30px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface-2);
+}
+
+:root[data-ui='modern'] .wg-set-nav-group {
+  margin: 14px 0 4px;
+  padding: 0 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .wg-set-navbtn {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--fb-radius);
+  color: var(--fb-muted);
+  font-size: 13px;
+}
+
+:root[data-ui='modern'] .wg-set-navbtn:hover {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set-navbtn.is-active {
+  background: var(--fb-selected);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set-nav-foot {
+  padding: 12px 10px 4px;
+  border-top: 1px solid var(--fb-border);
+  color: var(--fb-faint);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+:root[data-ui='modern'] .wg-set-main {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--fb-bg);
+}
+
+:root[data-ui='modern'] .wg-set-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .wg-set-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set-head-meta {
+  color: var(--fb-faint);
+  font-size: 11.5px;
+}
+
+:root[data-ui='modern'] .wg-set-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  max-width: 840px;
+  padding: 8px 24px 64px;
+}
+
+:root[data-ui='modern'] .wg-set-section-intro {
+  margin: 12px 0 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-set-group {
+  margin: 28px 0 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-row {
+  flex: 0 0 auto;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--fb-border);
+  min-height: 0;
+}
+
+/* In the models detail pane the copy column would be 144px wide beside a
+ * 290px control; Freebuff stacks the control under the label instead. */
+:root[data-ui='modern'] .catalog-detail,
+:root[data-ui='modern'] .settings-form {
+  container: fbdetail / inline-size;
+}
+
+@container fbdetail (max-width: 560px) {
+  :root[data-ui='modern'] .wg-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  :root[data-ui='modern'] .wg-row-control {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  :root[data-ui='modern'] .wg-row-control > .input-flat,
+  :root[data-ui='modern'] .wg-row-control > .select-flat {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+}
+
+:root[data-ui='modern'] .wg-row h4 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-row p {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-row-control {
+  width: 290px;
+  min-width: 0;
+}
+
+:root[data-ui='modern'] .wg-row-control > .input-flat,
+:root[data-ui='modern'] .wg-row-control > .select-flat {
+  width: 100%;
+  min-width: 0;
+}
+
+/* opencode styles these with its own token layer and higher specificity. */
+:root[data-ui='modern'] .wg-set-scroll .input-flat,
+:root[data-ui='modern'] .wg-set-scroll .select-flat,
+:root[data-ui='modern'] .catalog-search .input-flat {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface-2);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .input-flat,
+:root[data-ui='modern'] .select-flat {
+  height: 32px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface-2);
+  color: var(--fb-text);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .input-flat:focus,
+:root[data-ui='modern'] .select-flat:focus {
+  border-color: color-mix(in srgb, var(--fb-faint) 40%, var(--fb-border));
+  outline: none;
+}
+
+:root[data-ui='modern'] .segmented {
+  padding: 2px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .segmented-btn {
+  height: 26px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .segmented-btn:hover {
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .wg-set .segmented .segmented-btn.active,
+:root[data-ui='modern'] .segmented .segmented-btn.active,
+:root[data-ui='modern'] .wg-row-control .segmented-btn.active {
+  background: var(--fb-selected);
+  color: var(--fb-text);
+  box-shadow: 0 1px 2px color-mix(in srgb, #000000 22%, transparent);
+}
+
+:root[data-ui='modern'] .segmented-btn:not(.active) {
+  background: transparent;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .toggle {
+  width: 34px;
+  height: 20px;
+  border: 1px solid var(--fb-border);
+  border-radius: 999px;
+  background: var(--fb-track);
+}
+
+:root[data-ui='modern'] .toggle.on {
+  border-color: transparent;
+  background: var(--fb-brand-dim);
+}
+
+/* The classic knob is 16px and travels 18px, which overflows a 34px track
+ * and gets clipped; freebuff's is 14px inside 34px. */
+:root[data-ui='modern'] .toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 2px color-mix(in srgb, #000000 30%, transparent);
+  transform: none;
+  transition: transform 0.16s ease;
+}
+
+:root[data-ui='modern'] .toggle.on .toggle-knob {
+  transform: translateX(15px);
+}
+
+/* Toggles must keep their width inside inline rows (Memory squashed one). */
+:root[data-ui='modern'] .toggle {
+  flex: none;
+}
+
+/* The skills grid is a flex child that was shrinking to one card column. */
+:root[data-ui='modern'] .catalog-cards {
+  width: 100%;
+}
+
+/* Skills group their rows per source, so the three-up card grid left two
+ * empty columns and a 240px list; groups take the full width instead. */
+:root[data-ui='modern'] .catalog-cards:has(> .settings-group) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:root[data-ui='modern'] .settings-group {
+  padding: 12px 14px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .settings-group-title {
+  margin-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--fb-faint);
+}
+
+:root[data-ui='modern'] .list-row {
+  padding: 10px 0;
+  border-top: 1px solid var(--fb-border);
+}
+
+:root[data-ui='modern'] .settings-group-title + .list-row {
+  border-top: 0;
+}
+
+:root[data-ui='modern'] .list-row-main strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .list-row-sub {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .catalog-card {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+/* About: three flat children in a flex row overlapped; rebuild as a card. */
+:root[data-ui='modern'] .about-brand {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  column-gap: 12px;
+  row-gap: 3px;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .about-brand .about-mark {
+  grid-row: 1 / span 2;
+  align-self: start;
+  font-size: 0;
+  letter-spacing: 0;
+}
+
+:root[data-ui='modern'] .about-brand .about-mark::before {
+  content: 'TW';
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .about-brand h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .about-brand p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fb-muted);
+}
+
+/* Long workspace paths must truncate, not wrap mid-token over two lines. */
+:root[data-ui='modern'] .wg-row-control > .mono,
+:root[data-ui='modern'] .wg-row-control > strong,
+:root[data-ui='modern'] .wg-row-control > span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Stat tiles read as separate cards, not one divided table. */
+:root[data-ui='modern'] .wg-stat-grid {
+  gap: 8px;
+  border: 0;
+  background: transparent;
+}
+
+:root[data-ui='modern'] .wg-stat {
+  padding: 12px 14px;
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+/* Selects: keep the chevron on both palettes, at a specificity that survives
+ * the settings background shorthand above. */
+:root[data-ui='modern'] .select-flat,
+:root[data-ui='modern'] .wg-set-scroll .select-flat,
+:root[data-ui='modern'] .composer-controls > .select-flat {
+  appearance: none;
+  padding-right: 26px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--fb-faint) 50%),
+    linear-gradient(135deg, var(--fb-faint) 50%, transparent 50%);
+  background-position: calc(100% - 13px) 14px, calc(100% - 8px) 14px;
+  background-repeat: no-repeat;
+  background-size: 5px 5px;
+}
+
+:root[data-ui='modern'] .composer-controls > .select-flat {
+  background-position: calc(100% - 12px) 11px, calc(100% - 7px) 11px;
+}
+
+/* Three cookie fields plus a button cannot fit 290px; use two columns. */
+:root[data-ui='modern'] .cookie-form {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+:root[data-ui='modern'] .cookie-form > .input-flat {
+  min-width: 0;
+}
+
+:root[data-ui='modern'] .wg-callout {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+  color: var(--fb-muted);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .wg-setting-note {
+  color: var(--fb-faint);
+  font-size: 12px;
+}
+
+:root[data-ui='modern'] .wg-chip-tag {
+  border: 1px solid var(--fb-border);
+  border-radius: 6px;
+  background: var(--fb-surface-2);
+  color: var(--fb-muted);
+}
+
+:root[data-ui='modern'] .wg-chip-input {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+:root[data-ui='modern'] .wg-chip-input .input-flat {
+  flex: 1 1 120px;
+  min-width: 0;
+}
+
+:root[data-ui='modern'] .wg-stat {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+}
+
+:root[data-ui='modern'] .wg-stat span {
+  color: var(--fb-faint);
+  font-size: 11px;
+}
+
+:root[data-ui='modern'] .wg-stat strong {
+  color: var(--fb-text);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Popovers, menus and the command palette. */
+:root[data-ui='modern'] .popover-menu,
+:root[data-ui='modern'] .catalog-panel,
+:root[data-ui='modern'] [class*='palette-panel'] {
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-lg);
+  background: var(--fb-surface);
+  box-shadow: 0 16px 40px color-mix(in srgb, #000000 45%, transparent);
+}
+
+:root[data-ui='modern'] .popover-item {
+  border-radius: 7px;
+  color: var(--fb-muted);
+  font-size: 12.5px;
+}
+
+:root[data-ui='modern'] .popover-item:hover,
+:root[data-ui='modern'] .popover-item.is-active {
+  background: var(--fb-raised);
+  color: var(--fb-text);
+}
+
+:root[data-ui='modern'] .popover-desc {
+  color: var(--fb-faint);
+  font-size: 11.5px;
+}
+
+/* Focus ring everywhere: 2px brand halo, as on .shell-nav-button. */
+:root[data-ui='modern'] .wg-app :focus-visible,
+:root[data-ui='modern'] .wg-set :focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--fb-text) 30%, transparent);
+  outline-offset: -2px;
+}

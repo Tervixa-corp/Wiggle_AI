@@ -8,33 +8,39 @@ interface Props {
   tokenEstimate: number;
 }
 
-export const StatusBar: React.FC<Props> = ({ status, pendingCount, tokenEstimate }) => {
-  return (
-    <footer className="statusbar">
-      <div className="statusbar-group">
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-          <GitBranch size={11} />
-          <span>{status?.gitBranch || 'local'}</span>
-        </span>
-        <span className="statusbar-sep" />
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-          <span className={`dot ${pendingCount > 0 ? 'dot-warn' : 'dot-ok'}`} />
-          <span>{pendingCount > 0 ? `Agents: Running (${pendingCount})` : 'Agents: Idle'}</span>
-        </span>
-        <span className="statusbar-sep" />
-        <span>MCP: {status?.mcpCount ?? 0} Ready</span>
-        <span className="statusbar-sep" />
-        <span>Skills: {status?.skillsCount ?? 0}</span>
-        <span className="statusbar-sep" />
-        <span>Memory: {status?.memoryCount ?? 0}</span>
-      </div>
-      <div className="statusbar-group">
-        <span>Tokens: {tokenEstimate}</span>
-        <span className="statusbar-sep" />
-        <span>Undo: {status?.undoCount ?? 0}</span>
-        <span className="statusbar-sep" />
-        <span>UTF-8</span>
-      </div>
-    </footer>
-  );
-};
+export const StatusBar: React.FC<Props> = ({ status, pendingCount, tokenEstimate }) => (
+  <footer className="wg-status" aria-label="Status bar">
+    <div className="wg-status-group">
+      <span className="wg-status-item">
+        <span
+          className={`wg-dot ${pendingCount > 0 ? 'is-live' : status?.ready ? 'is-ok' : 'is-warn'}`}
+          aria-hidden
+        />
+        <span>{pendingCount > 0 ? `Running · ${pendingCount}` : status?.ready ? 'Ready' : 'No provider'}</span>
+      </span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">
+        <GitBranch size={10} aria-hidden />
+        <span>{status?.gitBranch || 'local'}</span>
+      </span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item is-strong mono">
+        {status?.configured ? `${status.provider} · ${status.model}` : 'no model configured'}
+      </span>
+    </div>
+
+    <div className="wg-status-group">
+      <span className="wg-status-item">{status?.skillsCount ?? 0} skills</span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">{status?.pluginsCount ?? 0} plugins</span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">{status?.mcpCount ?? 0} MCP</span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">{status?.memoryCount ?? 0} memories</span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">~{tokenEstimate} tokens</span>
+      <span className="wg-status-sep" />
+      <span className="wg-status-item">undo {status?.undoCount ?? 0}</span>
+    </div>
+  </footer>
+);

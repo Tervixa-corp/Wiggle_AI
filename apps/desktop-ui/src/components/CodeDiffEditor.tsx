@@ -1,9 +1,18 @@
-import React, { useMemo, useState } from 'react';
-import { Check, Columns2, RotateCcw, RotateCw, Save, X } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Columns2, RotateCcw, RotateCw, Save, X } from 'lucide-react';
 import type { OpenEditorTab } from '../store/useWiggleStore';
+
+interface EditorPrefs {
+  wrap: boolean;
+  lineNumbers: boolean;
+  tabSize: number;
+  autoSave: boolean;
+  spellCheck: boolean;
+}
 
 interface Props {
   tab: OpenEditorTab;
+  prefs: EditorPrefs;
   onChange: (path: string, content: string) => void;
   onSave: (path: string) => void;
   onToggleDiff: (path: string) => void;
@@ -34,6 +43,7 @@ function computeSimpleDiff(before: string, after: string): DiffLine[] {
 
 export const CodeDiffEditor: React.FC<Props> = ({
   tab,
+  prefs,
   onChange,
   onSave,
   onToggleDiff,
@@ -46,6 +56,13 @@ export const CodeDiffEditor: React.FC<Props> = ({
     () => computeSimpleDiff(tab.originalContent, tab.content),
     [tab.originalContent, tab.content]
   );
+
+  // Auto-save waits for a pause so a keystroke burst commits one snapshot.
+  useEffect(() => {
+    if (!prefs.autoSave || !tab.dirty) return;
+    const timer = setTimeout(() => onSave(tab.path), 2000);
+    return () => clearTimeout(timer);
+  }, [prefs.autoSave, tab.dirty, tab.content, tab.path, onSave]);
 
   return (
     <div className="editor-wrap">
@@ -68,19 +85,11 @@ export const CodeDiffEditor: React.FC<Props> = ({
               </button>
               <button
                 className="btn-flat"
-                style={{ height: 24, fontSize: 11, color: 'var(--status-ok)' }}
-                onClick={() => onSave(tab.path)}
-              >
-                <Check size={12} />
-                <span>Accept</span>
-              </button>
-              <button
-                className="btn-flat"
                 style={{ height: 24, fontSize: 11, color: 'var(--status-err)' }}
                 onClick={() => onChange(tab.path, tab.originalContent)}
               >
                 <X size={12} />
-                <span>Reject</span>
+                <span>Revert</span>
               </button>
             </>
           )}
@@ -123,20 +132,37 @@ export const CodeDiffEditor: React.FC<Props> = ({
         )
       ) : (
         <div className="editor-surface">
-          <div className="line-gutter">
-            {lines.map((_, idx) => (
-              <div key={idx}>{idx + 1}</div>
-            ))}
-          </div>
+          {prefs.lineNumbers && (
+            <div className="line-gutter">
+              {lines.map((_, idx) => (
+                <div key={idx}>{idx + 1}</div>
+              ))}
+            </div>
+          )}
           <textarea
             className="code-textarea"
-            spellCheck={false}
+            spellCheck={prefs.spellCheck}
+            wrap={prefs.wrap ? 'soft' : 'off'}
+            style={prefs.wrap ? { whiteSpace: 'pre-wrap' } : { whiteSpace: 'pre', overflowX: 'auto' }}
             value={tab.content}
             onChange={(e) => onChange(tab.path, e.target.value)}
             onKeyDown={(e) => {
               if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
                 e.preventDefault();
                 onSave(tab.path);
+                return;
+              }
+              if (e.key === 'Tab') {
+                e.preventDefault();
+                const indent = ' '.repeat(prefs.tabSize);
+                const start = e.currentTarget.selectionStart;
+                const end = e.currentTarget.selectionEnd;
+                const next = `${tab.content.slice(0, start)}${indent}${tab.content.slice(end)}`;
+                onChange(tab.path, next);
+                requestAnimationFrame(() => {
+                  e.currentTarget.selectionStart = start + indent.length;
+                  e.currentTarget.selectionEnd = start + indent.length;
+                });
               }
             }}
           />
